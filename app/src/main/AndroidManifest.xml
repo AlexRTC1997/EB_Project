@@ -18,14 +18,20 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
+        </activity> <!-- <activity -->
+        <!-- android:name=".StatusActivity" -->
+        <!-- android:exported="false"> -->
+        <!-- <meta-data -->
+        <!-- android:name="android.app.lib_name" -->
+        <!-- android:value="" /> -->
+        <!-- </activity> -->
+        <activity
+            android:name=".StatusDetailsActivity"
+            android:parentActivityName=".StatusActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".StatusActivity" />
         </activity>
-<!--        <activity-->
-<!--            android:name=".StatusActivity"-->
-<!--            android:exported="false">-->
-<!--            <meta-data-->
-<!--                android:name="android.app.lib_name"-->
-<!--                android:value="" />-->
-<!--        </activity>-->
         <activity
             android:name=".MainActivity"
             android:exported="true">

@@ -30,10 +30,10 @@ public class StatusActivity extends AppCompatActivity {
         setContentView(R.layout.activity_status);
 
         // STATUS FORM
-        etStatusId = findViewById(R.id.et_status_id);
-        etStatusDescription = findViewById(R.id.et_status_description);
-        etStatusStatus = findViewById(R.id.et_status_status);
-        btnStatusSave = findViewById(R.id.btn_status_save);
+        etStatusId = findViewById(R.id.ed_status_details_id);
+        etStatusDescription = findViewById(R.id.et_status_details_description);
+        etStatusStatus = findViewById(R.id.et_status_details_status);
+        btnStatusSave = findViewById(R.id.btn_status_details_save);
 
         btnStatusSave.setOnClickListener(new View.OnClickListener() {
             @Override

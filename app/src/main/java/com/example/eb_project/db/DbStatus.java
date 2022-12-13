@@ -46,8 +46,8 @@ public class DbStatus extends DbHelper {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ArrayList<Status> statusList = new ArrayList<>();
-        Status status = null;
-        Cursor statusCursor = null;
+        Status status;
+        Cursor statusCursor;
 
         statusCursor = db.rawQuery("SELECT * FROM " + STATUS_TABLE_NAME, null);
 
@@ -65,6 +65,28 @@ public class DbStatus extends DbHelper {
         statusCursor.close();
 
         return statusList;
+    }
+
+    // RETURN AN SPECIFIC STATUS FROM DB
+    public Status displayOneStatus(String id) {
+        DbHelper dbHelper = new DbHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        Status status = null;
+        Cursor statusCursor;
+
+        statusCursor = db.rawQuery("SELECT * FROM " + STATUS_TABLE_NAME + " WHERE StaId = \"" + id + "\" LIMIT 1", null);
+
+        if(statusCursor.moveToFirst()) {
+                status = new Status();
+                status.setId(statusCursor.getString(0));
+                status.setDescription(statusCursor.getString(1));
+                status.setStatus(statusCursor.getString(2));
+        }
+
+        statusCursor.close();
+
+        return status;
     }
 
 }

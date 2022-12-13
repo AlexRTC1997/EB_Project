@@ -7,7 +7,7 @@
     tools:context=".StatusActivity">
 
     <EditText
-        android:id="@+id/et_status_id"
+        android:id="@+id/ed_status_details_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/et_status_description"
+        android:id="@+id/et_status_details_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -30,10 +30,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_status_id" />
+        app:layout_constraintTop_toBottomOf="@+id/ed_status_details_id" />
 
     <EditText
-        android:id="@+id/et_status_status"
+        android:id="@+id/et_status_details_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -43,10 +43,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_status_description" />
+        app:layout_constraintTop_toBottomOf="@+id/et_status_details_description" />
 
     <Button
-        android:id="@+id/btn_status_save"
+        android:id="@+id/btn_status_details_save"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="96dp"
@@ -56,7 +56,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_status_status" />
+        app:layout_constraintTop_toBottomOf="@+id/et_status_details_status" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_status_list"
@@ -79,13 +79,6 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_status_save" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_status_details_save" />
 
-    <View
-        android:id="@+id/divider"
-        android:layout_width="409dp"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="264dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
