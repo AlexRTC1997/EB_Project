@@ -33,6 +33,7 @@ public class StatusListAdapter extends RecyclerView.Adapter<StatusListAdapter.St
     public void onBindViewHolder(@NonNull StatusViewHolder holder, int position) {
         holder.tvStatusId.setText(statusList.get(position).getId());
         holder.tvStatusDescription.setText(statusList.get(position).getDescription());
+        holder.tvStatusStatus.setText(statusList.get(position).getStatus());
     }
 
     @Override
@@ -41,13 +42,14 @@ public class StatusListAdapter extends RecyclerView.Adapter<StatusListAdapter.St
     }
 
     public class StatusViewHolder extends RecyclerView.ViewHolder {
-        TextView tvStatusId, tvStatusDescription;
+        TextView tvStatusId, tvStatusDescription, tvStatusStatus;
 
         public StatusViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tvStatusId = itemView.findViewById(R.id.tv_status_list_item_id);
             tvStatusDescription = itemView.findViewById(R.id.tv_status_list_item_description);
+            tvStatusStatus = itemView.findViewById(R.id.tv_status_status);
         }
     }
 }
