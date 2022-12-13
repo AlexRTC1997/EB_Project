@@ -89,4 +89,24 @@ public class DbStatus extends DbHelper {
         return status;
     }
 
+    // UPDATE Status in DB
+    public boolean updateStatus(String statusId, String statusDescription, String statusStatus) {
+        boolean ok = false;
+
+        DbHelper dbHelper = new DbHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        try {
+            db.execSQL("UPDATE " + STATUS_TABLE_NAME + " SET StaId = '" + statusId + "', StaDes = '" + statusDescription + "', StaSta = '" + statusStatus + "' WHERE StaId = '" + statusId + "'" );
+            ok = true;
+        } catch (Exception e) {
+            e.toString();
+            ok = false;
+        } finally {
+            db.close();
+        }
+
+        return ok;
+    }
+
 }

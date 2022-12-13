@@ -32,6 +32,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".StatusActivity" />
         </activity>
+
+        <activity
+            android:name=".StatusUpdateActivity"
+            android:parentActivityName=".StatusActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".StatusActivity" />
+        </activity>
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
