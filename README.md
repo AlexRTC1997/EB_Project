@@ -1,1 +1,38 @@
 # Electronic Business Project
+
+## SQL Schema
+
+```SQL
+CREATE TABLE "Status" (
+	"StaId"	TEXT NOT NULL,
+	"StaDes"	TEXT NOT NULL,
+	"StaSta"	TEXT NOT NULL,
+	PRIMARY KEY("StaId")
+);
+
+CREATE TABLE "Brands" (
+	"BraId"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	"BraNam"	TEXT NOT NULL,
+	"BraSta"	TEXT NOT NULL,
+	FOREIGN KEY("BraSta") REFERENCES "Status"("StaId")
+)
+
+CREATE TABLE "Measurement Units" (
+	"MeaUniId"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	"MeaUniNam"	TEXT NOT NULL,
+	"MeaUniSta"	TEXT NOT NULL,
+	FOREIGN KEY("MeaUniSta") REFERENCES "Status"("StaId")
+);
+
+CREATE TABLE "Articles" (
+	"ArtId"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	"ArtNam"	TEXT NOT NULL,
+	"ArtMeaUni"	INTEGER NOT NULL,
+	"ArtUniPri"	REAL NOT NULL,
+	"ArtBra"	INTEGER NOT NULL,
+	"ArtSta"	TEXT NOT NULL,
+	FOREIGN KEY("ArtBra") REFERENCES "Brands"("BraId"),
+	FOREIGN KEY("ArtSta") REFERENCES "Status"("StaId"),
+	FOREIGN KEY("ArtMeaUni") REFERENCES "Measurement Units"("MeaUniId")
+);
+```
