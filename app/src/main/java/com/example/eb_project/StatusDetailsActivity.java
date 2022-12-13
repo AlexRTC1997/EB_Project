@@ -1,7 +1,9 @@
 package com.example.eb_project;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
@@ -15,7 +17,7 @@ import com.example.eb_project.entities.Status;
 public class StatusDetailsActivity extends AppCompatActivity {
     EditText etStatusDetailsId, etStatusDetailsDescription, etStatusDetailsStatus;
     Button btnStatusDetailsSave;
-    Button btnStatusDetailsUpdate;
+    Button btnStatusDetailsUpdate, btnStatusDetailsDelete;
 
     Status status;
     String statusId;
@@ -31,6 +33,7 @@ public class StatusDetailsActivity extends AppCompatActivity {
         btnStatusDetailsSave = findViewById(R.id.btn_status_details_save);
 
         btnStatusDetailsUpdate = findViewById(R.id.btn_status_details_update);
+        btnStatusDetailsDelete = findViewById(R.id.btn_status_details_delete);
 
         if(savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -58,6 +61,7 @@ public class StatusDetailsActivity extends AppCompatActivity {
             etStatusDetailsStatus.setInputType(InputType.TYPE_NULL);
         }
 
+        // UPDATE LISTENER
         btnStatusDetailsUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,5 +70,33 @@ public class StatusDetailsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // DELETE LISTENER
+        btnStatusDetailsDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(StatusDetailsActivity.this);
+                builder.setMessage("The register will be deleted. Are you sure?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                if(dbStatus.deleteStatus(statusId)) {
+                                    goToStatusActivity();
+                                }
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        }).show();
+            }
+        });
+    }
+
+    private void goToStatusActivity () {
+        Intent intent = new Intent(this, StatusActivity.class);
+        startActivity(intent);
     }
 }

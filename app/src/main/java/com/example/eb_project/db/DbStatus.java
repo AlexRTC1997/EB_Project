@@ -109,4 +109,24 @@ public class DbStatus extends DbHelper {
         return ok;
     }
 
+    // DELETE Status in DB
+    public boolean deleteStatus(String statusId) {
+        boolean ok = false;
+
+        DbHelper dbHelper = new DbHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        try {
+            db.execSQL("DELETE FROM " + STATUS_TABLE_NAME + " WHERE StaId = '" + statusId + "'");
+            ok = true;
+        } catch (Exception e) {
+            e.toString();
+            ok = false;
+        } finally {
+            db.close();
+        }
+
+        return ok;
+    }
+
 }

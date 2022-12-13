@@ -15,7 +15,7 @@ import com.example.eb_project.entities.Status;
 
 public class StatusUpdateActivity extends AppCompatActivity {
     EditText etStatusDetailsId, etStatusDetailsDescription, etStatusDetailsStatus;
-    Button btnStatusDetailsSave, btnStatusDetailsUpdate;
+    Button btnStatusDetailsSave, btnStatusDetailsUpdate, btnStatusDetailsDelete;
 
     Status status;
     String statusId;
@@ -30,8 +30,10 @@ public class StatusUpdateActivity extends AppCompatActivity {
         etStatusDetailsId = findViewById(R.id.ed_status_details_id);
         etStatusDetailsDescription = findViewById(R.id.et_status_details_description);
         etStatusDetailsStatus = findViewById(R.id.et_status_details_status);
+
         btnStatusDetailsSave = findViewById(R.id.btn_status_details_save);
         btnStatusDetailsUpdate = findViewById(R.id.btn_status_details_update);
+        btnStatusDetailsDelete = findViewById(R.id.btn_status_details_delete);
 
         if(savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -54,6 +56,7 @@ public class StatusUpdateActivity extends AppCompatActivity {
             etStatusDetailsStatus.setText(status.getStatus());
 
             btnStatusDetailsUpdate.setVisibility(View.INVISIBLE);
+            btnStatusDetailsDelete.setVisibility(View.INVISIBLE);
         }
 
         btnStatusDetailsSave.setOnClickListener(new View.OnClickListener() {
