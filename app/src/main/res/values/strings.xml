@@ -1,7 +1,12 @@
 <resources>
-    <string name="app_name">EB_Project</string>
+    <string name="app_name">Articles Management</string>
 
-    <string name="temp_button">Create DB</string>
+    <!-- MAIN STRING -->
+    <string name="main_articles_label">Articles</string>
+    <string name="main_brands_label">Brands</string>
+    <string name="main_measurements_label">Measurement Units</string>
+    <string name="main_status_label">Status</string>
+
 
     <!-- STATUS STRINGS -->
     <string name="status_id_label">ID</string>
