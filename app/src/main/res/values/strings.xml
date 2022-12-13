@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">EB_Project</string>
+
+    <string name="temp_button">Create DB</string>
 </resources>
