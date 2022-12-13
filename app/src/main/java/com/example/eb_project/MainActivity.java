@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
 
                 if(db != null) {
-                    Toast.makeText(MainActivity.this, "Database craeted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Database created", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(MainActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
                 }

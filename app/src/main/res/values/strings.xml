@@ -2,4 +2,10 @@
     <string name="app_name">EB_Project</string>
 
     <string name="temp_button">Create DB</string>
+
+    <!-- STATUS STRINGS -->
+    <string name="status_id_label">ID</string>
+    <string name="status_description_label">Description</string>
+    <string name="status_status_label">Status</string>
+    <string name="status_save_label">Save Status</string>
 </resources>
