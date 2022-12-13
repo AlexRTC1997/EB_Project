@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EB_Project"
         tools:targetApi="31">
+
         <activity
             android:name=".StatusActivity"
             android:parentActivityName=".MainActivity">
@@ -26,7 +27,7 @@
         <!-- android:value="" /> -->
         <!-- </activity> -->
         <activity
-            android:name=".StatusDetailsActivity"
+            android:name=".StatusAddActivity"
             android:parentActivityName=".StatusActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -34,13 +35,19 @@
         </activity>
 
         <activity
+            android:name=".StatusDetailsActivity"
+            android:parentActivityName=".StatusActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".StatusActivity" />
+        </activity>
+        <activity
             android:name=".StatusUpdateActivity"
             android:parentActivityName=".StatusActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".StatusActivity" />
         </activity>
-
         <activity
             android:name=".MainActivity"
             android:exported="true">
