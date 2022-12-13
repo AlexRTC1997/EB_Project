@@ -13,4 +13,5 @@
     <string name="status_description_label">Description</string>
     <string name="status_status_label">Status</string>
     <string name="status_save_label">Save Status</string>
+    <string name="status_list_title">List of Statuses</string>
 </resources>
