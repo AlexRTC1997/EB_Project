@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.eb_project.adapters.StatusListAdapter;
@@ -18,13 +19,15 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class StatusActivity extends AppCompatActivity {
-
+public class StatusActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     FloatingActionButton fbaStatusAdd;
+    SearchView svStatusSearch;
 
     RecyclerView rvStatusList;
     ArrayList<Status> statusList;
+
+    StatusListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +36,7 @@ public class StatusActivity extends AppCompatActivity {
 
         // STATUS FORM
         fbaStatusAdd = findViewById(R.id.fba_status_add);
-
+        svStatusSearch = findViewById(R.id.sv_status_search);
 
         // RECYCLER VIEW
         rvStatusList = findViewById(R.id.rv_status_list);
@@ -43,7 +46,7 @@ public class StatusActivity extends AppCompatActivity {
 
         statusList = new ArrayList<>();
 
-        StatusListAdapter adapter = new StatusListAdapter(dbStatus.displayStatus());
+        adapter = new StatusListAdapter(dbStatus.displayStatus());
         rvStatusList.setAdapter(adapter);
 
         // ADD ACTION
@@ -54,7 +57,21 @@ public class StatusActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // SEARCH ACTION
+        svStatusSearch.setOnQueryTextListener(this);
     }
 
+    // SEARCH VIEW
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        return false;
+    }
 
+    // SEARCH VIEW
+    @Override
+    public boolean onQueryTextChange(String s) {
+        adapter.filter(s);
+        return false;
+    }
 }

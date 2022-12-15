@@ -15,12 +15,20 @@ import com.example.eb_project.StatusDetailsActivity;
 import com.example.eb_project.entities.Status;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
 public class StatusListAdapter extends RecyclerView.Adapter<StatusListAdapter.StatusViewHolder> {
     ArrayList<Status> statusList;
+    ArrayList<Status> statusListAux;    // SearchView
 
     public StatusListAdapter(ArrayList<Status> statusList) {
         this.statusList = statusList;
+        // SearchView
+        statusListAux = new ArrayList<>();
+        statusListAux.addAll(statusList);
+
     }
 
 
@@ -65,5 +73,33 @@ public class StatusListAdapter extends RecyclerView.Adapter<StatusListAdapter.St
                 }
             });
         }
+    }
+
+    // SearchView - Filter
+    public void filter (String textToSearch) {
+        int length = textToSearch.length();
+
+        if (length == 0) {
+            statusList.clear();
+            statusList.addAll(statusListAux);
+        } else {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                List<Status> collection = statusList.stream().
+                        filter(i -> i.getDescription().toLowerCase().contains(textToSearch.toLowerCase()))
+                        .collect(Collectors.toList());
+
+                statusList.clear();
+                statusList.addAll(collection);
+
+            } else {
+                for (Status s: statusListAux) {
+                    if(s.getDescription().toLowerCase().contains(textToSearch.toLowerCase())) {
+                        statusList.add(s);
+                    }
+                }
+            }
+        }
+
+        notifyDataSetChanged();
     }
 }
