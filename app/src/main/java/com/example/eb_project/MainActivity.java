@@ -13,7 +13,7 @@ import com.example.eb_project.db.DbHelper;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btnStatus;
+    Button btnStatus, btnBrand, btnMeasurement;
 
 
     @Override
@@ -34,21 +34,46 @@ public class MainActivity extends AppCompatActivity {
         */
 
         btnStatus = findViewById(R.id.btn_main_status);
+        btnBrand = findViewById(R.id.btn_main_brands);
+        btnMeasurement = findViewById(R.id.btn_main_measurements);
 
+        // MENU ACTIONS
         btnStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goStatusActivity(view);
+                goToStatusActivity(view);
             }
         });
 
+        btnBrand.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToBrandActivity(view);
+            }
+        });
 
+        btnMeasurement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToMeasurementActivity(view);
+            }
+        });
     }
 
     // Intent
-    public void goStatusActivity(View view) {
-        Intent statusIntent = new Intent(this, StatusActivity.class);
-        startActivity(statusIntent);
+    public void goToStatusActivity(View view) {
+        Intent intent = new Intent(this, StatusActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToBrandActivity(View view) {
+        Intent intent = new Intent(this, BrandActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToMeasurementActivity(View view) {
+        Intent intent = new Intent(this, MeasurementActivity.class);
+        startActivity(intent);
     }
 
 }

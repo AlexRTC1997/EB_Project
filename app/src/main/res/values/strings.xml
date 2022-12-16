@@ -16,4 +16,32 @@
     <string name="status_update_label">Update</string>
     <string name="status_delete_label">Delete</string>
     <string name="status_list_title">List of Statuses</string>
+
+    <!-- BRAND STRING -->
+    <string name="brand_name_label">Brand name:</string>
+    <string name="brand_status_label">Brand status:</string>
+    <string name="brand_save_label">Save Brand</string>
+    <string name="brand_update_label">Update</string>
+    <string name="brand_delete_label">Delete</string>
+    <string name="brand_list_title">List of Brands</string>
+
+    <!-- MEASUREMENTS STRING -->
+    <string name="measurements_name_label">Measurement name:</string>
+    <string name="measurements_status_label">Measurement status:</string>
+    <string name="measurements_save_label">Save Measurement</string>
+    <string name="measurements_update_label">Update</string>
+    <string name="measurements_delete_label">Delete</string>
+    <string name="measurements_list_title">List of Measurement</string>
+
+    <!-- ARTICLES STRING -->
+    <string name="article_name_label">Article name:</string>
+    <string name="article_measurement_label">Article measurement:</string>
+    <string name="article_price_label">Article price:</string>
+    <string name="article_brand_label">Article brand:</string>
+    <string name="article_status_label">Article status:</string>
+    <string name="article_save_label">Save Article</string>
+    <string name="article_update_label">Update</string>
+    <string name="article_delete_label">Delete</string>
+    <string name="article_list_title">List of Articles</string>
+
 </resources>

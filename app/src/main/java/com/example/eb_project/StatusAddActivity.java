@@ -49,7 +49,7 @@ public class StatusAddActivity extends AppCompatActivity {
         etStatusStatus.setText("");
     }
 
-    private void goToStatusActivity () {
+    private void goToStatusActivity() {
         Intent intent = new Intent(this, StatusActivity.class);
         startActivity(intent);
     }

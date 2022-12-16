@@ -12,20 +12,41 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EB_Project"
         tools:targetApi="31">
-
+        <activity
+            android:name=".MeasurementActivity"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".MeasurementAddActivity"
+            android:parentActivityName=".MeasurementActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MeasurementActivity" />
+        </activity>
+        <activity
+            android:name=".BrandActivity"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".BrandAddActivity"
+            android:parentActivityName=".BrandActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".BrandActivity" />
+        </activity>
         <activity
             android:name=".StatusActivity"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
-        </activity> <!-- <activity -->
-        <!-- android:name=".StatusActivity" -->
-        <!-- android:exported="false"> -->
-        <!-- <meta-data -->
-        <!-- android:name="android.app.lib_name" -->
-        <!-- android:value="" /> -->
-        <!-- </activity> -->
+        </activity>
         <activity
             android:name=".StatusAddActivity"
             android:parentActivityName=".StatusActivity">
@@ -33,7 +54,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".StatusActivity" />
         </activity>
-
         <activity
             android:name=".StatusDetailsActivity"
             android:parentActivityName=".StatusActivity">
