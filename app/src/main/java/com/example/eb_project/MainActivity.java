@@ -13,8 +13,7 @@ import com.example.eb_project.db.DbHelper;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btnStatus, btnBrand, btnMeasurement;
-
+    Button btnStatus, btnBrand, btnMeasurement, btnArticle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         btnStatus = findViewById(R.id.btn_main_status);
         btnBrand = findViewById(R.id.btn_main_brands);
         btnMeasurement = findViewById(R.id.btn_main_measurements);
+        btnArticle = findViewById(R.id.btn_main_articles);
 
         // MENU ACTIONS
         btnStatus.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +58,13 @@ public class MainActivity extends AppCompatActivity {
                 goToMeasurementActivity(view);
             }
         });
+
+        btnArticle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToArticleActivity(view);
+            }
+        });
     }
 
     // Intent
@@ -73,6 +80,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToMeasurementActivity(View view) {
         Intent intent = new Intent(this, MeasurementActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToArticleActivity(View view) {
+        Intent intent = new Intent(this, ArticleActivity.class);
         startActivity(intent);
     }
 
