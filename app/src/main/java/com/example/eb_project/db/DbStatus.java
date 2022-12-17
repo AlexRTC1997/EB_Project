@@ -20,6 +20,7 @@ public class DbStatus extends DbHelper {
         this.context = context;
     }
 
+    // INSERT
     public long insertStatus(String statusId, String statusDescription, String statusStatus) {
         long id = 0;
 

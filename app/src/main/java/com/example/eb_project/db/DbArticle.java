@@ -2,9 +2,14 @@ package com.example.eb_project.db;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import androidx.annotation.Nullable;
+
+import com.example.eb_project.entities.Article;
+
+import java.util.ArrayList;
 
 public class DbArticle extends DbHelper {
 
@@ -15,7 +20,8 @@ public class DbArticle extends DbHelper {
         this.context = context;
     }
 
-    public long insertArticle(String articleName, String articleMeasurement, Double articlePrice, String articleBrand, String articleStatus) {
+    // INSERT
+    public long insertArticle(String articleName, int articleMeasurement, Double articlePrice, int articleBrand, String articleStatus) {
         long id = 0;
 
         try {
@@ -35,5 +41,32 @@ public class DbArticle extends DbHelper {
         }
 
         return id;
+    }
+
+    // RETURN AN ARRAYLIST WITH ARTICLE FROM DB
+    public ArrayList<Article> displayArticle() {
+        DbHelper dbHelper = new DbHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ArrayList<Article> articleList = new ArrayList<>();
+        Article article;
+        Cursor articleCursor;
+
+        articleCursor = db.rawQuery("SELECT * FROM " + ARTICLES_TABLE_NAME, null);
+
+        if(articleCursor.moveToFirst()) {
+            do {
+                article = new Article();
+                article.setId(articleCursor.getInt(0));
+                article.setName(articleCursor.getString(1));
+                article.setStatus(articleCursor.getString(5));
+
+                articleList.add(article);
+            } while (articleCursor.moveToNext());
+        }
+
+        articleCursor.close();
+
+        return articleList;
     }
 }

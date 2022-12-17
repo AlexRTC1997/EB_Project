@@ -33,7 +33,7 @@ public class ArticleAddActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 DbArticle dbArticle = new DbArticle(ArticleAddActivity.this);
-                long id = dbArticle.insertArticle(etArticleName.getText().toString(), etArticleMeasurement.getText().toString(), Double.parseDouble(etArticlePrice.getText().toString()), etArticleBrand.getText().toString(), etArticleStatus.getText().toString());
+                long id = dbArticle.insertArticle(etArticleName.getText().toString(), Integer.parseInt(etArticleMeasurement.getText().toString()), Double.parseDouble(etArticlePrice.getText().toString()), Integer.parseInt(etArticleBrand.getText().toString()), etArticleStatus.getText().toString());
 
                 if (id > 0) {
                     Toast.makeText(ArticleAddActivity.this, "Saved article", Toast.LENGTH_LONG).show();
@@ -50,7 +50,7 @@ public class ArticleAddActivity extends AppCompatActivity {
     private void cleanFields() {
         etArticleName.setText("");
         etArticleMeasurement.setText("");
-        etArticlePrice.setText(0);
+        etArticlePrice.setText("");
         etArticleBrand.setText("");
         etArticleStatus.setText("");
     }
