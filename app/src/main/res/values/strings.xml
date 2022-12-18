@@ -6,6 +6,7 @@
     <string name="main_brands_label">Brands</string>
     <string name="main_measurements_label">Measurement Units</string>
     <string name="main_status_label">Status</string>
+    <string name="main_title">Articles Management</string>
 
 
     <!-- STATUS STRINGS -->
@@ -18,6 +19,7 @@
     <string name="status_list_title">List of Statuses</string>
 
     <!-- BRAND STRING -->
+    <string name="brand_id_label">ID:</string>
     <string name="brand_name_label">Brand name:</string>
     <string name="brand_status_label">Brand status:</string>
     <string name="brand_save_label">Save Brand</string>
@@ -26,6 +28,7 @@
     <string name="brand_list_title">List of Brands</string>
 
     <!-- MEASUREMENTS STRING -->
+    <string name="measurements_id_label">ID:</string>
     <string name="measurements_name_label">Measurement name:</string>
     <string name="measurements_status_label">Measurement status:</string>
     <string name="measurements_save_label">Save Measurement</string>
@@ -34,6 +37,7 @@
     <string name="measurements_list_title">List of Measurement</string>
 
     <!-- ARTICLES STRING -->
+    <string name="article_id_label">ID:</string>
     <string name="article_name_label">Article name:</string>
     <string name="article_measurement_label">Article measurement:</string>
     <string name="article_price_label">Article price:</string>

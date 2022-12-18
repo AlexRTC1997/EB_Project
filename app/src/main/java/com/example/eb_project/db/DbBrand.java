@@ -66,4 +66,26 @@ public class DbBrand extends DbHelper {
 
         return brandList;
     }
+
+    // RETURN AN SPECIFIC BRAND FROM DB
+    public Brand displayOneBrand(int id) {
+        DbHelper dbHelper = new DbHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        Brand brand = null;
+        Cursor brandCursor;
+
+        brandCursor = db.rawQuery("SELECT * FROM " + BRAND_TABLE_NAME + " WHERE BraId = \"" + id + "\" LIMIT 1", null);
+
+        if(brandCursor.moveToFirst()) {
+            brand = new Brand();
+            brand.setId(Integer.parseInt(brandCursor.getString(0)));
+            brand.setName(brandCursor.getString(1));
+            brand.setStatus(brandCursor.getString(2));
+        }
+
+        brandCursor.close();
+
+        return brand;
+    }
 }

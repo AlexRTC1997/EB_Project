@@ -1,5 +1,7 @@
 package com.example.eb_project.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.eb_project.MeasurementDetailsActivity;
 import com.example.eb_project.R;
 import com.example.eb_project.entities.Measurement;
 
@@ -49,6 +52,17 @@ public class MeasurementListAdapter extends RecyclerView.Adapter<MeasurementList
             tvMeasurementId = itemView.findViewById(R.id.tv_measurement_list_item_id);
             tvMeasurementName = itemView.findViewById(R.id.tv_measurement_list_item_name);
             tvMeasurementStatus = itemView.findViewById(R.id.tv_measurement_list_item_status);
+
+            // ITEM LISTENER TO VIEW DETAILS OF EACH ITEM
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Context context = view.getContext();
+                    Intent detailsIntent = new Intent(context, MeasurementDetailsActivity.class);
+                    detailsIntent.putExtra("measurementId", measurementList.get(getAdapterPosition()).getId());
+                    context.startActivity(detailsIntent);
+                }
+            });
 
         }
     }

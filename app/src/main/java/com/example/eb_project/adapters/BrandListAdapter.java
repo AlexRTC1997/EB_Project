@@ -1,5 +1,7 @@
 package com.example.eb_project.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eb_project.R;
+import com.example.eb_project.BrandDetailsActivity;
 import com.example.eb_project.entities.Brand;
 
 import java.util.ArrayList;
@@ -49,6 +52,18 @@ public class BrandListAdapter extends RecyclerView.Adapter<BrandListAdapter.Bran
             tvBrandId = itemView.findViewById(R.id.tv_brand_list_item_id);
             tvBrandName = itemView.findViewById(R.id.tv_brand_list_item_name);
             tvBrandStatus = itemView.findViewById(R.id.tv_brand_list_item_status);
+
+            // ITEM LISTENER TO VIEW DETAILS OF EACH ITEM
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Context context = view.getContext();
+                    Intent detailsIntent = new Intent(context, BrandDetailsActivity.class);
+                    detailsIntent.putExtra("brandId", brandList.get(getAdapterPosition()).getId());
+                    context.startActivity(detailsIntent);
+                }
+            });
+
 
         }
     }

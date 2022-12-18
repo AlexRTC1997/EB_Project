@@ -27,6 +27,7 @@ public class StatusDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status_details);
 
+        // DETAILS VIEW
         etStatusDetailsId = findViewById(R.id.ed_status_details_id);
         etStatusDetailsDescription = findViewById(R.id.et_status_details_description);
         etStatusDetailsStatus = findViewById(R.id.et_status_details_status);

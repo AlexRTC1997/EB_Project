@@ -67,4 +67,26 @@ public class DbMeasurement extends DbHelper {
         return measurementList;
     }
 
+    // RETURN AN SPECIFIC MEASUREMENT FROM DB
+    public Measurement displayOneMeasurement(int id) {
+        DbHelper dbHelper = new DbHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        Measurement measurement = null;
+        Cursor measurementCursor;
+
+        measurementCursor = db.rawQuery("SELECT * FROM " + MEASUREMENT_TABLE_NAME + " WHERE MeaUniId = \"" + id + "\" LIMIT 1", null);
+
+        if(measurementCursor.moveToFirst()) {
+            measurement = new Measurement();
+            measurement.setId(Integer.parseInt(measurementCursor.getString(0)));
+            measurement.setName(measurementCursor.getString(1));
+            measurement.setStatus(measurementCursor.getString(2));
+        }
+
+        measurementCursor.close();
+
+        return measurement;
+    }
+
 }

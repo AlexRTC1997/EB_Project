@@ -69,4 +69,29 @@ public class DbArticle extends DbHelper {
 
         return articleList;
     }
+
+    // RETURN AN SPECIFIC ARTICLE FROM DB
+    public Article displayOneArticle(int id) {
+        DbHelper dbHelper = new DbHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        Article article = null;
+        Cursor articleCursor;
+
+        articleCursor = db.rawQuery("SELECT * FROM " + ARTICLES_TABLE_NAME + " WHERE ArtId = \"" + id + "\" LIMIT 1", null);
+
+        if(articleCursor.moveToFirst()) {
+            article = new Article();
+            article.setId(Integer.parseInt(articleCursor.getString(0)));
+            article.setName(articleCursor.getString(1));
+            article.setMeasurement_unit(articleCursor.getInt(2));
+            article.setPrice(articleCursor.getDouble(3));
+            article.setBrand(articleCursor.getInt(4));
+            article.setStatus(articleCursor.getString(5));
+        }
+
+        articleCursor.close();
+
+        return article;
+    }
 }
