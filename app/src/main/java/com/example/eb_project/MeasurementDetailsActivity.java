@@ -1,7 +1,9 @@
 package com.example.eb_project;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
@@ -69,5 +71,33 @@ public class MeasurementDetailsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // DELETE LISTENER
+        btnMeasurementDetailsDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MeasurementDetailsActivity.this);
+                builder.setMessage("The register will be deleted. Are you sure?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                if(dbMeasurement.deleteMeasurement(measurementId)) {
+                                    goToMeasurementActivity();
+                                }
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        }).show();
+            }
+        });
+    }
+
+    private void goToMeasurementActivity () {
+        Intent intent = new Intent(this, MeasurementActivity.class);
+        startActivity(intent);
     }
 }

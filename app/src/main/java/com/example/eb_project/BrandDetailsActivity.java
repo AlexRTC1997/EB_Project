@@ -1,7 +1,9 @@
 package com.example.eb_project;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
@@ -68,5 +70,33 @@ public class BrandDetailsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // DELETE LISTENER
+        btnBrandDetailsDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(BrandDetailsActivity.this);
+                builder.setMessage("The register will be deleted. Are you sure?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                if(dbBrand.deleteBrand(brandId)) {
+                                    goToBrandActivity();
+                                }
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        }).show();
+            }
+        });
+    }
+
+    private void goToBrandActivity () {
+        Intent intent = new Intent(this, BrandActivity.class);
+        startActivity(intent);
     }
 }

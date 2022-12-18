@@ -108,4 +108,24 @@ public class DbBrand extends DbHelper {
 
         return ok;
     }
+
+    // DELETE Brand in DB
+    public boolean deleteBrand(int brandId) {
+        boolean ok = false;
+
+        DbHelper dbHelper = new DbHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        try {
+            db.execSQL("DELETE FROM " + BRAND_TABLE_NAME + " WHERE BraId = '" + brandId + "'");
+            ok = true;
+        } catch (Exception e) {
+            e.toString();
+            ok = false;
+        } finally {
+            db.close();
+        }
+
+        return ok;
+    }
 }

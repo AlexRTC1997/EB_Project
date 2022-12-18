@@ -109,4 +109,24 @@ public class DbMeasurement extends DbHelper {
         return ok;
     }
 
+    // DELETE Measurement in DB
+    public boolean deleteMeasurement(int measurementId) {
+        boolean ok = false;
+
+        DbHelper dbHelper = new DbHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        try {
+            db.execSQL("DELETE FROM " + MEASUREMENT_TABLE_NAME + " WHERE MeaUniId = '" + measurementId + "'");
+            ok = true;
+        } catch (Exception e) {
+            e.toString();
+            ok = false;
+        } finally {
+            db.close();
+        }
+
+        return ok;
+    }
+
 }

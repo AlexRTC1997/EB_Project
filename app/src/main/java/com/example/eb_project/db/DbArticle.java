@@ -114,4 +114,24 @@ public class DbArticle extends DbHelper {
 
         return ok;
     }
+
+    // DELETE Article in DB
+    public boolean deleteArticle(int articleId) {
+        boolean ok = false;
+
+        DbHelper dbHelper = new DbHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        try {
+            db.execSQL("DELETE FROM " + ARTICLES_TABLE_NAME + " WHERE ArtId = '" + articleId + "'");
+            ok = true;
+        } catch (Exception e) {
+            e.toString();
+            ok = false;
+        } finally {
+            db.close();
+        }
+
+        return ok;
+    }
 }
