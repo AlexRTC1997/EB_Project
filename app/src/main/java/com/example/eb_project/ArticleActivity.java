@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.SearchView;
 
 import com.example.eb_project.adapters.ArticleListAdapter;
 import com.example.eb_project.db.DbArticle;
@@ -15,9 +16,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class ArticleActivity extends AppCompatActivity {
+public class ArticleActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     FloatingActionButton fbaArticleStatusAdd;
+    SearchView svArticleSearch;
 
     RecyclerView rvArticleList;
     ArrayList<Article> articleList;
@@ -31,6 +33,7 @@ public class ArticleActivity extends AppCompatActivity {
 
         // STATUS FORM
         fbaArticleStatusAdd = findViewById(R.id.fba_article_add);
+        svArticleSearch = findViewById(R.id.sv_article_search);
 
         // RECYCLER VIEW
         rvArticleList = findViewById(R.id.rv_article_list);
@@ -43,8 +46,7 @@ public class ArticleActivity extends AppCompatActivity {
         adapter = new ArticleListAdapter(dbArticle.displayArticle());
         rvArticleList.setAdapter(adapter);
 
-
-
+        // ADD ACTION
         fbaArticleStatusAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,5 +54,19 @@ public class ArticleActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // SEARCH ACTION
+        svArticleSearch.setOnQueryTextListener(this);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+        adapter.filter(s);
+        return false;
     }
 }

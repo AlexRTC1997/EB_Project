@@ -15,12 +15,19 @@ import com.example.eb_project.BrandDetailsActivity;
 import com.example.eb_project.entities.Brand;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BrandListAdapter extends RecyclerView.Adapter<BrandListAdapter.BrandViewHolder> {
     ArrayList<Brand> brandList;
+    ArrayList<Brand> brandListAux;      // Search View
 
     public BrandListAdapter(ArrayList<Brand> brandList) {
+
         this.brandList = brandList;
+        // SearchView
+        brandListAux = new ArrayList<>();
+        brandListAux.addAll(brandList);
     }
 
     @NonNull
@@ -66,6 +73,34 @@ public class BrandListAdapter extends RecyclerView.Adapter<BrandListAdapter.Bran
 
 
         }
+    }
+
+    // SearchView - Filter
+    public void filter (String textToSearch) {
+        int length = textToSearch.length();
+
+        if (length == 0) {
+            brandList.clear();
+            brandList.addAll(brandListAux);
+        } else {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                List<Brand> collection = brandList.stream().
+                        filter(i -> i.getName().toLowerCase().contains(textToSearch.toLowerCase()))
+                        .collect(Collectors.toList());
+
+                brandList.clear();
+                brandList.addAll(collection);
+
+            } else {
+                for (Brand b: brandListAux) {
+                    if(b.getName().toLowerCase().contains(textToSearch.toLowerCase())) {
+                        brandList.add(b);
+                    }
+                }
+            }
+        }
+
+        notifyDataSetChanged();
     }
 
 }

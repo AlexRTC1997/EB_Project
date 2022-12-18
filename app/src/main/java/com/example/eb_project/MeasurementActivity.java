@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.SearchView;
 
 import com.example.eb_project.adapters.MeasurementListAdapter;
 import com.example.eb_project.db.DbMeasurement;
@@ -15,9 +16,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class MeasurementActivity extends AppCompatActivity {
+public class MeasurementActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     FloatingActionButton fbaMeasurementStatusAdd;
+    SearchView svMeasurementSearch;
 
     RecyclerView rvMeasurementList;
     ArrayList<Measurement> measurementList;
@@ -31,6 +33,7 @@ public class MeasurementActivity extends AppCompatActivity {
 
         // STATUS FORM
         fbaMeasurementStatusAdd = findViewById(R.id.fba_measurement_add);
+        svMeasurementSearch = findViewById(R.id.sv_measurement_search);
 
         // RECYCLER VIEW
         rvMeasurementList = findViewById(R.id.rv_measurement_list);
@@ -43,7 +46,7 @@ public class MeasurementActivity extends AppCompatActivity {
         adapter = new MeasurementListAdapter(dbMeasurement.displayMeasurement());
         rvMeasurementList.setAdapter(adapter);
 
-
+        // ADD ACTION
         fbaMeasurementStatusAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,5 +54,19 @@ public class MeasurementActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // SEARCH ACTION
+        svMeasurementSearch.setOnQueryTextListener(this);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+        adapter.filter(s);
+        return false;
     }
 }

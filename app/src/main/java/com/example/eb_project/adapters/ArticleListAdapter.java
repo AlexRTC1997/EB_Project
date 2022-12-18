@@ -15,12 +15,19 @@ import com.example.eb_project.R;
 import com.example.eb_project.entities.Article;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.ArticleViewHolder> {
     ArrayList<Article> articleList;
+    ArrayList<Article> articleListAux;    // SearchView
 
     public ArticleListAdapter(ArrayList<Article> articleList) {
+
         this.articleList = articleList;
+        // SearchView
+        articleListAux = new ArrayList<>();
+        articleListAux.addAll(articleList);
     }
 
     @NonNull
@@ -65,6 +72,34 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
             });
 
         }
+    }
+
+    // SearchView - Filter
+    public void filter (String textToSearch) {
+        int length = textToSearch.length();
+
+        if (length == 0) {
+            articleList.clear();
+            articleList.addAll(articleListAux);
+        } else {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                List<Article> collection = articleList.stream().
+                        filter(i -> i.getName().toLowerCase().contains(textToSearch.toLowerCase()))
+                        .collect(Collectors.toList());
+
+                articleList.clear();
+                articleList.addAll(collection);
+
+            } else {
+                for (Article a: articleListAux) {
+                    if(a.getName().toLowerCase().contains(textToSearch.toLowerCase())) {
+                        articleList.add(a);
+                    }
+                }
+            }
+        }
+
+        notifyDataSetChanged();
     }
 
 }
