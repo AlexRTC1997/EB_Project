@@ -1,24 +1,27 @@
 package com.example.eb_project;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eb_project.db.DbMeasurement;
 import com.example.eb_project.entities.Measurement;
 
-public class MeasurementDetailsActivity extends AppCompatActivity {
+public class MeasurementUpdateActivity extends AppCompatActivity {
 
     EditText etMeasurementDetailsId, etMeasurementDetailsName, etMeasurementDetailsStatus;
     Button btnMeasurementDetailsSave, btnMeasurementDetailsUpdate, btnMeasurementDetailsDelete;
 
     Measurement measurement;
     int measurementId;
+
+    boolean ok = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +49,7 @@ public class MeasurementDetailsActivity extends AppCompatActivity {
             measurementId = (int) savedInstanceState.getSerializable("measurementId");
         }
 
-        DbMeasurement dbMeasurement = new DbMeasurement(MeasurementDetailsActivity.this);
+        DbMeasurement dbMeasurement = new DbMeasurement(MeasurementUpdateActivity.this);
         measurement = dbMeasurement.displayOneMeasurement(measurementId);
 
         if(measurement != null) {
@@ -54,20 +57,34 @@ public class MeasurementDetailsActivity extends AppCompatActivity {
             etMeasurementDetailsName.setText(measurement.getName());
             etMeasurementDetailsStatus.setText(measurement.getStatus());
 
-            btnMeasurementDetailsSave.setVisibility(View.INVISIBLE);
             etMeasurementDetailsId.setInputType(InputType.TYPE_NULL);
-            etMeasurementDetailsName.setInputType(InputType.TYPE_NULL);
-            etMeasurementDetailsStatus.setInputType(InputType.TYPE_NULL);
+            btnMeasurementDetailsUpdate.setVisibility(View.INVISIBLE);
+            btnMeasurementDetailsDelete.setVisibility(View.INVISIBLE);
         }
 
-        // UPDATE LISTENER
-        btnMeasurementDetailsUpdate.setOnClickListener(new View.OnClickListener() {
+        // UPDATE
+        btnMeasurementDetailsSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MeasurementDetailsActivity.this, MeasurementUpdateActivity.class);
-                intent.putExtra("measurementId", measurementId);
-                startActivity(intent);
+                if(!etMeasurementDetailsId.getText().toString().equals("")) {
+                    ok = dbMeasurement.updateMeasurement(Integer.parseInt(etMeasurementDetailsId.getText().toString()), etMeasurementDetailsName.getText().toString(), etMeasurementDetailsStatus.getText().toString());
+
+                    if(ok) {
+                        Toast.makeText(MeasurementUpdateActivity.this, "Updated", Toast.LENGTH_SHORT).show();
+                        goToMeasurementDetails();
+                    } else {
+                        Toast.makeText(MeasurementUpdateActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(MeasurementUpdateActivity.this, "All fields are required", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+    }
+
+    private void goToMeasurementDetails() {
+        Intent intent = new Intent(this, MeasurementDetailsActivity.class);
+        intent.putExtra("measurementId", measurementId);
+        startActivity(intent);
     }
 }

@@ -1,23 +1,26 @@
 package com.example.eb_project;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eb_project.db.DbBrand;
 import com.example.eb_project.entities.Brand;
 
-public class BrandDetailsActivity extends AppCompatActivity {
+public class BrandUpdateActivity extends AppCompatActivity {
     EditText etBrandDetailsId, etBrandDetailsName, etBrandDetailsStatus;
     Button btnBrandDetailsSave, btnBrandDetailsUpdate, btnBrandDetailsDelete;
 
     Brand brand;
     int brandId;
+
+    boolean ok = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,7 @@ public class BrandDetailsActivity extends AppCompatActivity {
             brandId = (int) savedInstanceState.getSerializable("brandId");
         }
 
-        DbBrand dbBrand = new DbBrand(BrandDetailsActivity.this);
+        DbBrand dbBrand = new DbBrand(BrandUpdateActivity.this);
         brand = dbBrand.displayOneBrand(brandId);
 
         if(brand != null) {
@@ -53,20 +56,34 @@ public class BrandDetailsActivity extends AppCompatActivity {
             etBrandDetailsName.setText(brand.getName());
             etBrandDetailsStatus.setText(brand.getStatus());
 
-            btnBrandDetailsSave.setVisibility(View.INVISIBLE);
             etBrandDetailsId.setInputType(InputType.TYPE_NULL);
-            etBrandDetailsName.setInputType(InputType.TYPE_NULL);
-            etBrandDetailsStatus.setInputType(InputType.TYPE_NULL);
+            btnBrandDetailsUpdate.setVisibility(View.INVISIBLE);
+            btnBrandDetailsDelete.setVisibility(View.INVISIBLE);
         }
 
-        // UPDATE LISTENER
-        btnBrandDetailsUpdate.setOnClickListener(new View.OnClickListener() {
+        // UPDATE
+        btnBrandDetailsSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(BrandDetailsActivity.this, BrandUpdateActivity.class);
-                intent.putExtra("brandId", brandId);
-                startActivity(intent);
+                if(!etBrandDetailsId.getText().toString().equals("")) {
+                    ok = dbBrand.updateBrand(Integer.parseInt(etBrandDetailsId.getText().toString()), etBrandDetailsName.getText().toString(), etBrandDetailsStatus.getText().toString());
+
+                    if(ok) {
+                        Toast.makeText(BrandUpdateActivity.this, "Updated", Toast.LENGTH_SHORT).show();
+                        goToBrandDetails();
+                    } else {
+                        Toast.makeText(BrandUpdateActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(BrandUpdateActivity.this, "All fields are required", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+    }
+
+    private void goToBrandDetails() {
+        Intent intent = new Intent(this, BrandDetailsActivity.class);
+        intent.putExtra("brandId", brandId);
+        startActivity(intent);
     }
 }

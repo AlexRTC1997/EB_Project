@@ -1,24 +1,27 @@
 package com.example.eb_project;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eb_project.db.DbArticle;
 import com.example.eb_project.entities.Article;
 
-public class ArticleDetailsActivity extends AppCompatActivity {
+public class ArticleUpdateActivity extends AppCompatActivity {
 
     EditText etArticleDetailsId, etArticleDetailsName, etArticleDetailsMeasurement, etArticleDetailsPrice, etArticleDetailsBrand, etArticleDetailsStatus;
     Button btnArticleDetailsSave, btnArticleDetailsUpdate, btnArticleDetailsDelete;
 
     Article article;
     int articleId;
+
+    boolean ok = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +53,7 @@ public class ArticleDetailsActivity extends AppCompatActivity {
             articleId = (int) savedInstanceState.getSerializable("articleId");
         }
 
-        DbArticle dbArticle = new DbArticle(ArticleDetailsActivity.this);
+        DbArticle dbArticle = new DbArticle(ArticleUpdateActivity.this);
         article = dbArticle.displayOneArticle(articleId);
 
         if(article != null) {
@@ -61,23 +64,34 @@ public class ArticleDetailsActivity extends AppCompatActivity {
             etArticleDetailsBrand.setText(String.valueOf(article.getBrand()));
             etArticleDetailsStatus.setText(article.getStatus());
 
-            btnArticleDetailsSave.setVisibility(View.INVISIBLE);
             etArticleDetailsId.setInputType(InputType.TYPE_NULL);
-            etArticleDetailsName.setInputType(InputType.TYPE_NULL);
-            etArticleDetailsMeasurement.setInputType(InputType.TYPE_NULL);
-            etArticleDetailsPrice.setInputType(InputType.TYPE_NULL);
-            etArticleDetailsBrand.setInputType(InputType.TYPE_NULL);
-            etArticleDetailsStatus.setInputType(InputType.TYPE_NULL);
+            btnArticleDetailsUpdate.setVisibility(View.INVISIBLE);
+            btnArticleDetailsDelete.setVisibility(View.INVISIBLE);
         }
 
-        // UPDATE LISTENER
-        btnArticleDetailsUpdate.setOnClickListener(new View.OnClickListener() {
+        // UPDATE
+        btnArticleDetailsSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ArticleDetailsActivity.this, ArticleUpdateActivity.class);
-                intent.putExtra("articleId", articleId);
-                startActivity(intent);
+                if(!etArticleDetailsId.getText().toString().equals("")) {
+                    ok = dbArticle.updateArticle(Integer.parseInt(etArticleDetailsId.getText().toString()), etArticleDetailsName.getText().toString(), Integer.parseInt(etArticleDetailsMeasurement.getText().toString()), Double.parseDouble(etArticleDetailsPrice.getText().toString()), Integer.parseInt(etArticleDetailsBrand.getText().toString()), etArticleDetailsStatus.getText().toString());
+
+                    if(ok) {
+                        Toast.makeText(ArticleUpdateActivity.this, "Updated", Toast.LENGTH_SHORT).show();
+                        goToArticleDetails();
+                    } else {
+                        Toast.makeText(ArticleUpdateActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(ArticleUpdateActivity.this, "All fields are required", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+    }
+
+    private void goToArticleDetails() {
+        Intent intent = new Intent(this, ArticleDetailsActivity.class);
+        intent.putExtra("articleId", articleId);
+        startActivity(intent);
     }
 }

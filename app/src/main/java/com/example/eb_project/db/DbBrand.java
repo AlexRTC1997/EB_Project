@@ -88,4 +88,24 @@ public class DbBrand extends DbHelper {
 
         return brand;
     }
+
+    // UPDATE Brand in DB
+    public boolean updateBrand(int brandId, String brandName, String brandStatus) {
+        boolean ok = false;
+
+        DbHelper dbHelper = new DbHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        try {
+            db.execSQL("UPDATE " + BRAND_TABLE_NAME + " SET BraNam = '" + brandName + "', BraSta = '" + brandStatus + "' WHERE BraId = '" + brandId + "'" );
+            ok = true;
+        } catch (Exception e) {
+            e.toString();
+            ok = false;
+        } finally {
+            db.close();
+        }
+
+        return ok;
+    }
 }

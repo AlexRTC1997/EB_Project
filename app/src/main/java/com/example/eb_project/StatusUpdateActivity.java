@@ -55,10 +55,12 @@ public class StatusUpdateActivity extends AppCompatActivity {
             etStatusDetailsDescription.setText(status.getDescription());
             etStatusDetailsStatus.setText(status.getStatus());
 
+            etStatusDetailsId.setInputType(InputType.TYPE_NULL);
             btnStatusDetailsUpdate.setVisibility(View.INVISIBLE);
             btnStatusDetailsDelete.setVisibility(View.INVISIBLE);
         }
 
+        // UPDATE
         btnStatusDetailsSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

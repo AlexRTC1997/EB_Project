@@ -94,4 +94,24 @@ public class DbArticle extends DbHelper {
 
         return article;
     }
+
+    // UPDATE Article in DB
+    public boolean updateArticle(int articleId, String articleName, int articleMeasurement, Double articlePrice, int articleBrand, String articleStatus) {
+        boolean ok = false;
+
+        DbHelper dbHelper = new DbHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        try {
+            db.execSQL("UPDATE " + ARTICLES_TABLE_NAME + " SET ArtNam = '" + articleName + "', ArtMeaUni = '" + articleMeasurement + "', ArtUniPri = '" + articlePrice + "', ArtBra = '" + articleBrand + "', ArtSta = '" + articleStatus + "' WHERE ArtId = '" + articleId + "'" );
+            ok = true;
+        } catch (Exception e) {
+            e.toString();
+            ok = false;
+        } finally {
+            db.close();
+        }
+
+        return ok;
+    }
 }

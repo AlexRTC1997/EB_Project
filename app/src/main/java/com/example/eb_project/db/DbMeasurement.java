@@ -89,4 +89,24 @@ public class DbMeasurement extends DbHelper {
         return measurement;
     }
 
+    // UPDATE Measurement in DB
+    public boolean updateMeasurement(int measurementId, String measurementName, String measurementStatus) {
+        boolean ok = false;
+
+        DbHelper dbHelper = new DbHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        try {
+            db.execSQL("UPDATE " + MEASUREMENT_TABLE_NAME + " SET MeaUniNam = '" + measurementName + "', MeaUniSta = '" + measurementStatus + "' WHERE MeaUniId = '" + measurementId + "'" );
+            ok = true;
+        } catch (Exception e) {
+            e.toString();
+            ok = false;
+        } finally {
+            db.close();
+        }
+
+        return ok;
+    }
+
 }
