@@ -15,7 +15,7 @@ import com.example.eb_project.entities.Brand;
 
 public class BrandUpdateActivity extends AppCompatActivity {
     EditText etBrandDetailsId, etBrandDetailsName, etBrandDetailsStatus;
-    Button btnBrandDetailsSave, btnBrandDetailsUpdate, btnBrandDetailsDelete;
+    Button btnBrandDetailsSave, btnBrandDetailsUpdate, btnBrandDetailsDelete, btnBrandDetailsInactivate, btnBrandDetailsReactivate, btnBrandDetailsLDelete;
 
     Brand brand;
     int brandId;
@@ -31,10 +31,13 @@ public class BrandUpdateActivity extends AppCompatActivity {
         etBrandDetailsId = findViewById(R.id.ed_brand_details_id);
         etBrandDetailsName = findViewById(R.id.et_brand_details_name);
         etBrandDetailsStatus = findViewById(R.id.et_brand_details_status);
-        btnBrandDetailsSave = findViewById(R.id.btn_brand_details_save);
 
+        btnBrandDetailsSave = findViewById(R.id.btn_brand_details_save);
         btnBrandDetailsUpdate = findViewById(R.id.btn_brand_details_update);
         btnBrandDetailsDelete = findViewById(R.id.btn_brand_details_delete);
+        btnBrandDetailsInactivate = findViewById(R.id.btn_brand_details_inactivate);
+        btnBrandDetailsReactivate = findViewById(R.id.btn_brand_details_reactivate);
+        btnBrandDetailsLDelete = findViewById(R.id.btn_brand_details_logical_delete);
 
         if(savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -59,6 +62,9 @@ public class BrandUpdateActivity extends AppCompatActivity {
             etBrandDetailsId.setInputType(InputType.TYPE_NULL);
             btnBrandDetailsUpdate.setVisibility(View.INVISIBLE);
             btnBrandDetailsDelete.setVisibility(View.INVISIBLE);
+            btnBrandDetailsInactivate.setVisibility(View.INVISIBLE);
+            btnBrandDetailsReactivate.setVisibility(View.INVISIBLE);
+            btnBrandDetailsLDelete.setVisibility(View.INVISIBLE);
         }
 
         // UPDATE

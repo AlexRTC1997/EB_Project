@@ -10,6 +10,7 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.eb_project.db.DbMeasurement;
 import com.example.eb_project.entities.Measurement;
@@ -17,10 +18,12 @@ import com.example.eb_project.entities.Measurement;
 public class MeasurementDetailsActivity extends AppCompatActivity {
 
     EditText etMeasurementDetailsId, etMeasurementDetailsName, etMeasurementDetailsStatus;
-    Button btnMeasurementDetailsSave, btnMeasurementDetailsUpdate, btnMeasurementDetailsDelete;
+    Button btnMeasurementDetailsSave, btnMeasurementDetailsUpdate, btnMeasurementDetailsDelete, btnMeasurementDetailsInactivate, btnMeasurementDetailsReactivate, btnMeasurementDetailsLDelete;
 
     Measurement measurement;
     int measurementId;
+
+    boolean ok = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,9 @@ public class MeasurementDetailsActivity extends AppCompatActivity {
 
         btnMeasurementDetailsUpdate = findViewById(R.id.btn_measurement_details_update);
         btnMeasurementDetailsDelete = findViewById(R.id.btn_measurement_details_delete);
+        btnMeasurementDetailsInactivate = findViewById(R.id.btn_measurement_details_inactivate);
+        btnMeasurementDetailsReactivate = findViewById(R.id.btn_measurement_details_reactivate);
+        btnMeasurementDetailsLDelete = findViewById(R.id.btn_measurement_details_logical_delete);
 
         if(savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -60,6 +66,20 @@ public class MeasurementDetailsActivity extends AppCompatActivity {
             etMeasurementDetailsId.setInputType(InputType.TYPE_NULL);
             etMeasurementDetailsName.setInputType(InputType.TYPE_NULL);
             etMeasurementDetailsStatus.setInputType(InputType.TYPE_NULL);
+
+            btnMeasurementDetailsDelete.setVisibility(View.INVISIBLE);
+
+            if (etMeasurementDetailsStatus.getText().toString().equals("D")) {
+                btnMeasurementDetailsInactivate.setVisibility(View.INVISIBLE);
+            } else if (etMeasurementDetailsStatus.getText().toString().equals("A")) {
+                btnMeasurementDetailsReactivate.setVisibility(View.INVISIBLE);
+            } else if (etMeasurementDetailsStatus.getText().toString().equals("*")) {
+                btnMeasurementDetailsLDelete.setVisibility(View.INVISIBLE);
+                btnMeasurementDetailsDelete.setVisibility(View.VISIBLE);
+                btnMeasurementDetailsUpdate.setVisibility(View.INVISIBLE);
+                btnMeasurementDetailsReactivate.setVisibility(View.INVISIBLE);
+                btnMeasurementDetailsInactivate.setVisibility(View.INVISIBLE);
+            }
         }
 
         // UPDATE LISTENER
@@ -94,10 +114,77 @@ public class MeasurementDetailsActivity extends AppCompatActivity {
                         }).show();
             }
         });
+
+        // INACTIVATE LISTENER
+        btnMeasurementDetailsInactivate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!etMeasurementDetailsStatus.getText().toString().equals("D")) {
+                    ok = dbMeasurement.updateMeasurement(Integer.parseInt(etMeasurementDetailsId.getText().toString()), etMeasurementDetailsName.getText().toString(), "D");
+
+                    if (ok) {
+                        Toast.makeText(MeasurementDetailsActivity.this, "Inactivated", Toast.LENGTH_SHORT).show();
+                        goToMeasurementDetailsActivity();
+                    } else {
+                        Toast.makeText(MeasurementDetailsActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+        });
+
+        // REACTIVATE LISTENER
+        btnMeasurementDetailsReactivate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!etMeasurementDetailsStatus.getText().toString().equals("A")) {
+                    ok = dbMeasurement.updateMeasurement(Integer.parseInt(etMeasurementDetailsId.getText().toString()), etMeasurementDetailsName.getText().toString(), "A");
+
+                    if (ok) {
+                        Toast.makeText(MeasurementDetailsActivity.this, "Reactivated", Toast.LENGTH_SHORT).show();
+                        goToMeasurementDetailsActivity();
+                    } else {
+                        Toast.makeText(MeasurementDetailsActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
+        // LOGICAL DELETE LISTENER
+        btnMeasurementDetailsLDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!etMeasurementDetailsStatus.getText().toString().equals("*")) {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MeasurementDetailsActivity.this);
+                    builder.setMessage("The register will be deleted. Are you sure?")
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    if (dbMeasurement.updateMeasurement(Integer.parseInt(etMeasurementDetailsId.getText().toString()), etMeasurementDetailsName.getText().toString(), "*")) {
+                                        goToMeasurementDetailsActivity();
+                                    }
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                }
+                            }).show();
+                }
+            }
+        });
+
     }
 
     private void goToMeasurementActivity () {
         Intent intent = new Intent(this, MeasurementActivity.class);
+        startActivity(intent);
+    }
+
+    private void goToMeasurementDetailsActivity() {
+        Intent intent = new Intent(this, MeasurementDetailsActivity.class);
+        intent.putExtra("measurementId", measurementId);
         startActivity(intent);
     }
 }

@@ -15,7 +15,7 @@ import com.example.eb_project.entities.Status;
 
 public class StatusUpdateActivity extends AppCompatActivity {
     EditText etStatusDetailsId, etStatusDetailsDescription, etStatusDetailsStatus;
-    Button btnStatusDetailsSave, btnStatusDetailsUpdate, btnStatusDetailsDelete;
+    Button btnStatusDetailsSave, btnStatusDetailsUpdate, btnStatusDetailsDelete, btnStatusDetailsInactivate, btnStatusDetailsReactivate, btnStatusDetailsLDelete;
 
     Status status;
     String statusId;
@@ -34,6 +34,9 @@ public class StatusUpdateActivity extends AppCompatActivity {
         btnStatusDetailsSave = findViewById(R.id.btn_status_details_save);
         btnStatusDetailsUpdate = findViewById(R.id.btn_status_details_update);
         btnStatusDetailsDelete = findViewById(R.id.btn_status_details_delete);
+        btnStatusDetailsInactivate = findViewById(R.id.btn_status_details_inactivate);
+        btnStatusDetailsReactivate = findViewById(R.id.btn_status_details_reactivate);
+        btnStatusDetailsLDelete = findViewById(R.id.btn_status_details_logical_delete);
 
         if(savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -58,6 +61,9 @@ public class StatusUpdateActivity extends AppCompatActivity {
             etStatusDetailsId.setInputType(InputType.TYPE_NULL);
             btnStatusDetailsUpdate.setVisibility(View.INVISIBLE);
             btnStatusDetailsDelete.setVisibility(View.INVISIBLE);
+            btnStatusDetailsInactivate.setVisibility(View.INVISIBLE);
+            btnStatusDetailsReactivate.setVisibility(View.INVISIBLE);
+            btnStatusDetailsLDelete.setVisibility(View.INVISIBLE);
         }
 
         // UPDATE

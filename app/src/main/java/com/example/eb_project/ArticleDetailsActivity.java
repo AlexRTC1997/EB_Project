@@ -10,6 +10,7 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.eb_project.db.DbArticle;
 import com.example.eb_project.entities.Article;
@@ -17,10 +18,12 @@ import com.example.eb_project.entities.Article;
 public class ArticleDetailsActivity extends AppCompatActivity {
 
     EditText etArticleDetailsId, etArticleDetailsName, etArticleDetailsMeasurement, etArticleDetailsPrice, etArticleDetailsBrand, etArticleDetailsStatus;
-    Button btnArticleDetailsSave, btnArticleDetailsUpdate, btnArticleDetailsDelete;
+    Button btnArticleDetailsSave, btnArticleDetailsUpdate, btnArticleDetailsDelete, btnArticleDetailsInactivate, btnArticleDetailsReactivate, btnArticleDetailsLDelete;
 
     Article article;
     int articleId;
+
+    boolean ok = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +39,11 @@ public class ArticleDetailsActivity extends AppCompatActivity {
         etArticleDetailsStatus = findViewById(R.id.et_article_details_status);
 
         btnArticleDetailsSave = findViewById(R.id.btn_article_details_save);
-
         btnArticleDetailsUpdate = findViewById(R.id.btn_article_details_update);
         btnArticleDetailsDelete = findViewById(R.id.btn_article_details_delete);
+        btnArticleDetailsInactivate = findViewById(R.id.btn_article_details_inactivate);
+        btnArticleDetailsReactivate = findViewById(R.id.btn_article_details_reactivate);
+        btnArticleDetailsLDelete = findViewById(R.id.btn_article_details_logical_delete);
 
         if(savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -70,6 +75,20 @@ public class ArticleDetailsActivity extends AppCompatActivity {
             etArticleDetailsPrice.setInputType(InputType.TYPE_NULL);
             etArticleDetailsBrand.setInputType(InputType.TYPE_NULL);
             etArticleDetailsStatus.setInputType(InputType.TYPE_NULL);
+
+            btnArticleDetailsDelete.setVisibility(View.INVISIBLE);
+
+            if (etArticleDetailsStatus.getText().toString().equals("D")) {
+                btnArticleDetailsInactivate.setVisibility(View.INVISIBLE);
+            } else if (etArticleDetailsStatus.getText().toString().equals("A")) {
+                btnArticleDetailsReactivate.setVisibility(View.INVISIBLE);
+            } else if (etArticleDetailsStatus.getText().toString().equals("*")) {
+                btnArticleDetailsLDelete.setVisibility(View.INVISIBLE);
+                btnArticleDetailsDelete.setVisibility(View.VISIBLE);
+                btnArticleDetailsUpdate.setVisibility(View.INVISIBLE);
+                btnArticleDetailsReactivate.setVisibility(View.INVISIBLE);
+                btnArticleDetailsInactivate.setVisibility(View.INVISIBLE);
+            }
         }
 
         // UPDATE LISTENER
@@ -105,11 +124,77 @@ public class ArticleDetailsActivity extends AppCompatActivity {
             }
         });
 
+        // INACTIVATE LISTENER
+        btnArticleDetailsInactivate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!etArticleDetailsStatus.getText().toString().equals("D")) {
+                    ok = dbArticle.updateArticle(Integer.parseInt(etArticleDetailsId.getText().toString()), etArticleDetailsName.getText().toString(), Integer.parseInt(etArticleDetailsMeasurement.getText().toString()), Double.parseDouble(etArticleDetailsPrice.getText().toString()), Integer.parseInt(etArticleDetailsBrand.getText().toString()), "D");
+
+                    if (ok) {
+                        Toast.makeText(ArticleDetailsActivity.this, "Inactivated", Toast.LENGTH_SHORT).show();
+                        goToArticleDetailsActivity();
+                    } else {
+                        Toast.makeText(ArticleDetailsActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+        });
+
+        // REACTIVATE LISTENER
+        btnArticleDetailsReactivate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!etArticleDetailsStatus.getText().toString().equals("A")) {
+                    ok = dbArticle.updateArticle(Integer.parseInt(etArticleDetailsId.getText().toString()), etArticleDetailsName.getText().toString(), Integer.parseInt(etArticleDetailsMeasurement.getText().toString()), Double.parseDouble(etArticleDetailsPrice.getText().toString()), Integer.parseInt(etArticleDetailsBrand.getText().toString()), "A");
+
+                    if (ok) {
+                        Toast.makeText(ArticleDetailsActivity.this, "Reactivated", Toast.LENGTH_SHORT).show();
+                        goToArticleDetailsActivity();
+                    } else {
+                        Toast.makeText(ArticleDetailsActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+        });
+
+        // LOGICAL DELETE LISTENER
+        btnArticleDetailsLDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!etArticleDetailsStatus.getText().toString().equals("*")) {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ArticleDetailsActivity.this);
+                    builder.setMessage("The register will be deleted. Are you sure?")
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    if (dbArticle.updateArticle(Integer.parseInt(etArticleDetailsId.getText().toString()), etArticleDetailsName.getText().toString(), Integer.parseInt(etArticleDetailsMeasurement.getText().toString()), Double.parseDouble(etArticleDetailsPrice.getText().toString()), Integer.parseInt(etArticleDetailsBrand.getText().toString()), "*")) {
+                                        goToArticleDetailsActivity();
+                                    }
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                }
+                            }).show();
+                }
+            }
+        });
 
     }
 
     private void goToArticleActivity () {
         Intent intent = new Intent(this, ArticleActivity.class);
+        startActivity(intent);
+    }
+
+    private void goToArticleDetailsActivity() {
+        Intent intent = new Intent(this, ArticleDetailsActivity.class);
+        intent.putExtra("articleId", articleId);
         startActivity(intent);
     }
 }

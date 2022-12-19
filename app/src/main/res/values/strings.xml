@@ -17,6 +17,9 @@
     <string name="status_update_label">Update</string>
     <string name="status_delete_label">Delete</string>
     <string name="status_list_title">List of Statuses</string>
+    <string name="status_inactivate_label">Inactivate</string>
+    <string name="status_reactivate_label">Reactivate</string>
+    <string name="status_logical_delete_label">Remove</string>
 
     <!-- BRAND STRING -->
     <string name="brand_id_label">ID:</string>
@@ -26,6 +29,9 @@
     <string name="brand_update_label">Update</string>
     <string name="brand_delete_label">Delete</string>
     <string name="brand_list_title">List of Brands</string>
+    <string name="brand_inactivate_label">Inactivate</string>
+    <string name="brand_reactivate_label">Reactivate</string>
+    <string name="brand_logical_delete_label">Remove</string>
 
     <!-- MEASUREMENTS STRING -->
     <string name="measurements_id_label">ID:</string>
@@ -35,6 +41,9 @@
     <string name="measurements_update_label">Update</string>
     <string name="measurements_delete_label">Delete</string>
     <string name="measurements_list_title">List of Measurement</string>
+    <string name="measurements_inactivate_label">Inactivate</string>
+    <string name="measurements_reactivate_label">Reactivate</string>
+    <string name="measurements_logical_delete_label">Remove</string>
 
     <!-- ARTICLES STRING -->
     <string name="article_id_label">ID:</string>
@@ -47,5 +56,8 @@
     <string name="article_update_label">Update</string>
     <string name="article_delete_label">Delete</string>
     <string name="article_list_title">List of Articles</string>
+    <string name="article_inactivate_label">Inactivate</string>
+    <string name="article_reactivate_label">Reactivate</string>
+    <string name="article_logical_delete_label">Remove</string>
 
 </resources>

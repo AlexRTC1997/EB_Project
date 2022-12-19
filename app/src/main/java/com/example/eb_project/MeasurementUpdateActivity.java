@@ -16,7 +16,7 @@ import com.example.eb_project.entities.Measurement;
 public class MeasurementUpdateActivity extends AppCompatActivity {
 
     EditText etMeasurementDetailsId, etMeasurementDetailsName, etMeasurementDetailsStatus;
-    Button btnMeasurementDetailsSave, btnMeasurementDetailsUpdate, btnMeasurementDetailsDelete;
+    Button btnMeasurementDetailsSave, btnMeasurementDetailsUpdate, btnMeasurementDetailsDelete, btnMeasurementDetailsInactivate, btnMeasurementDetailsReactivate, btnMeasurementDetailsLDelete;
 
     Measurement measurement;
     int measurementId;
@@ -32,10 +32,13 @@ public class MeasurementUpdateActivity extends AppCompatActivity {
         etMeasurementDetailsId = findViewById(R.id.ed_measurement_details_id);
         etMeasurementDetailsName = findViewById(R.id.et_measurement_details_name);
         etMeasurementDetailsStatus = findViewById(R.id.et_measurement_details_status);
-        btnMeasurementDetailsSave = findViewById(R.id.btn_measurement_details_save);
 
+        btnMeasurementDetailsSave = findViewById(R.id.btn_measurement_details_save);
         btnMeasurementDetailsUpdate = findViewById(R.id.btn_measurement_details_update);
         btnMeasurementDetailsDelete = findViewById(R.id.btn_measurement_details_delete);
+        btnMeasurementDetailsInactivate = findViewById(R.id.btn_measurement_details_inactivate);
+        btnMeasurementDetailsReactivate = findViewById(R.id.btn_measurement_details_reactivate);
+        btnMeasurementDetailsLDelete = findViewById(R.id.btn_measurement_details_logical_delete);
 
         if(savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -60,6 +63,9 @@ public class MeasurementUpdateActivity extends AppCompatActivity {
             etMeasurementDetailsId.setInputType(InputType.TYPE_NULL);
             btnMeasurementDetailsUpdate.setVisibility(View.INVISIBLE);
             btnMeasurementDetailsDelete.setVisibility(View.INVISIBLE);
+            btnMeasurementDetailsInactivate.setVisibility(View.INVISIBLE);
+            btnMeasurementDetailsReactivate.setVisibility(View.INVISIBLE);
+            btnMeasurementDetailsLDelete.setVisibility(View.INVISIBLE);
         }
 
         // UPDATE

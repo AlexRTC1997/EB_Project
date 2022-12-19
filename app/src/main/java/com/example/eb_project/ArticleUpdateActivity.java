@@ -16,7 +16,7 @@ import com.example.eb_project.entities.Article;
 public class ArticleUpdateActivity extends AppCompatActivity {
 
     EditText etArticleDetailsId, etArticleDetailsName, etArticleDetailsMeasurement, etArticleDetailsPrice, etArticleDetailsBrand, etArticleDetailsStatus;
-    Button btnArticleDetailsSave, btnArticleDetailsUpdate, btnArticleDetailsDelete;
+    Button btnArticleDetailsSave, btnArticleDetailsUpdate, btnArticleDetailsDelete, btnArticleDetailsInactivate, btnArticleDetailsReactivate, btnArticleDetailsLDelete;
 
     Article article;
     int articleId;
@@ -37,9 +37,12 @@ public class ArticleUpdateActivity extends AppCompatActivity {
         etArticleDetailsStatus = findViewById(R.id.et_article_details_status);
 
         btnArticleDetailsSave = findViewById(R.id.btn_article_details_save);
-
         btnArticleDetailsUpdate = findViewById(R.id.btn_article_details_update);
         btnArticleDetailsDelete = findViewById(R.id.btn_article_details_delete);
+        btnArticleDetailsInactivate = findViewById(R.id.btn_article_details_inactivate);
+        btnArticleDetailsReactivate = findViewById(R.id.btn_article_details_reactivate);
+        btnArticleDetailsLDelete = findViewById(R.id.btn_article_details_logical_delete);
+
 
         if(savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -67,6 +70,9 @@ public class ArticleUpdateActivity extends AppCompatActivity {
             etArticleDetailsId.setInputType(InputType.TYPE_NULL);
             btnArticleDetailsUpdate.setVisibility(View.INVISIBLE);
             btnArticleDetailsDelete.setVisibility(View.INVISIBLE);
+            btnArticleDetailsInactivate.setVisibility(View.INVISIBLE);
+            btnArticleDetailsReactivate.setVisibility(View.INVISIBLE);
+            btnArticleDetailsLDelete.setVisibility(View.INVISIBLE);
         }
 
         // UPDATE
