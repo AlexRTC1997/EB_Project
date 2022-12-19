@@ -5,11 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.eb_project.db.DbBrand;
+import com.example.eb_project.entities.Status;
+
+import java.util.List;
 
 public class BrandAddActivity extends AppCompatActivity {
     EditText etBrandName, etBrandStatus;
@@ -24,6 +30,7 @@ public class BrandAddActivity extends AppCompatActivity {
         etBrandStatus = findViewById(R.id.et_brand_details_status);
         btnBrandSave = findViewById(R.id.btn_brand_details_save);
 
+        // SAVE ACTION
         btnBrandSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

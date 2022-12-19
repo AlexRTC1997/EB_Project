@@ -130,4 +130,19 @@ public class DbStatus extends DbHelper {
         return ok;
     }
 
+    // SPINNER fill [2]
+    public Cursor displayStatusInSpinner() {
+        try {
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor rows = db.rawQuery("SELECT * FROM " + STATUS_TABLE_NAME, null);
+            if (rows.moveToFirst()) {
+                return rows;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 }
