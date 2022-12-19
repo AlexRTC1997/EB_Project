@@ -2,9 +2,7 @@ package com.example.eb_project;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,11 +15,8 @@ import android.widget.Toast;
 import com.example.eb_project.db.DbStatus;
 import com.example.eb_project.entities.Status;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class StatusAddActivity extends AppCompatActivity {
-    EditText etStatusId, etStatusDescription, etStatusStatus;
+    EditText etStatusId, etStatusDescription;
     Button btnStatusSave;
     Spinner spStatusStatus; // [3]
 
@@ -32,7 +27,6 @@ public class StatusAddActivity extends AppCompatActivity {
 
         etStatusId = findViewById(R.id.ed_status_details_id);
         etStatusDescription = findViewById(R.id.et_status_details_description);
-//        etStatusStatus = findViewById(R.id.et_status_details_status);
         btnStatusSave = findViewById(R.id.btn_status_details_save);
 
         spStatusStatus = findViewById(R.id.sp_status_details_status);
@@ -57,8 +51,7 @@ public class StatusAddActivity extends AppCompatActivity {
         });
 
         // SPINNER [5]
-        List<Status> statusList = fillStatusSpinner();
-        ArrayAdapter<Status> arrayAdapter = new ArrayAdapter<>(getApplicationContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, statusList);
+        ArrayAdapter<Status> arrayAdapter = new ArrayAdapter<>(getApplicationContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, MainActivity.statusList);
         spStatusStatus.setAdapter(arrayAdapter);
 
         spStatusStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -76,34 +69,10 @@ public class StatusAddActivity extends AppCompatActivity {
     private void cleanFields() {
         etStatusId.setText("");
         etStatusDescription.setText("");
-        etStatusStatus.setText("");
     }
 
     private void goToStatusActivity() {
         Intent intent = new Intent(this, StatusActivity.class);
         startActivity(intent);
-    }
-
-    // SPINNER [6]
-    @SuppressLint("Range")
-    public List<Status> fillStatusSpinner() {
-        List<Status> statusList = new ArrayList<>();
-        DbStatus dbStatus = new DbStatus(StatusAddActivity.this);
-        Cursor cursor = dbStatus.displayStatusInSpinner();
-
-        if (cursor != null) {
-            if (cursor.moveToFirst()) {
-                do {
-                    Status status = new Status();
-                    status.setId(cursor.getString(cursor.getColumnIndex("StaId")));
-                    status.setDescription(cursor.getString(cursor.getColumnIndex("StaDes")));
-                    statusList.add(status);
-                } while (cursor.moveToNext());
-            }
-        }
-
-        dbStatus.close();
-
-        return statusList;
     }
 }
