@@ -21,7 +21,6 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String MEASUREMENT_QUERY = "CREATE TABLE " + MEASUREMENT_TABLE_NAME + "(MeaUniId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, MeaUniNam TEXT NOT NULL, MeaUniSta TEXT NOT NULL, FOREIGN KEY(\"MeaUniSta\") REFERENCES \"Status\"(\"StaId\"))";
     private static final String ARTICLES_QUERY = "CREATE TABLE " + ARTICLES_TABLE_NAME + "(ArtId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ArtNam TEXT NOT NULL, ArtMeaUni INTEGER NOT NULL, ArtUniPri REAL NOT NULL, ArtBra INTEGER NOT NULL, ArtSta TEXT NOT NULL, FOREIGN KEY(\"ArtBra\") REFERENCES \"Brands\"(\"BraId\"), FOREIGN KEY(\"ArtSta\") REFERENCES \"Status\"(\"StaId\"), FOREIGN KEY(\"ArtMeaUni\") REFERENCES \"Measurement Units\"(\"MeaUniId\"))";
 
-
     public DbHelper(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
@@ -33,6 +32,9 @@ public class DbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(MEASUREMENT_QUERY);
         sqLiteDatabase.execSQL(ARTICLES_QUERY);
 
+        sqLiteDatabase.execSQL("INSERT INTO " + STATUS_TABLE_NAME + " VALUES ('A', 'Activated', 'A')");
+        sqLiteDatabase.execSQL("INSERT INTO " + STATUS_TABLE_NAME + " VALUES ('D', 'Disabled', 'A')");
+        sqLiteDatabase.execSQL("INSERT INTO " + STATUS_TABLE_NAME + " VALUES ('*', 'Deleted', 'A')");
     }
 
     @Override

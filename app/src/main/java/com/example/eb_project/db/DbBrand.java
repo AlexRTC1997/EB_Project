@@ -128,4 +128,19 @@ public class DbBrand extends DbHelper {
 
         return ok;
     }
+
+    // SPINNER fill [2]
+    public Cursor displayBrandInSpinner() {
+        try {
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor rows = db.rawQuery("SELECT * FROM " + BRAND_TABLE_NAME, null);
+            if (rows.moveToFirst()) {
+                return rows;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

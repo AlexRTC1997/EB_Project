@@ -13,12 +13,14 @@ import android.widget.Toast;
 
 import com.example.eb_project.db.DbArticle;
 import com.example.eb_project.db.DbBrand;
+import com.example.eb_project.entities.Brand;
+import com.example.eb_project.entities.Measurement;
 import com.example.eb_project.entities.Status;
 
 public class ArticleAddActivity extends AppCompatActivity {
-    EditText etArticleName, etArticleMeasurement, etArticlePrice, etArticleBrand;
+    EditText etArticleName, etArticlePrice;
     Button btnArticleSave;
-    Spinner spArticleStatus;
+    Spinner spArticleStatus, spArticleBrand, spArticleMeasurement;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +28,9 @@ public class ArticleAddActivity extends AppCompatActivity {
         setContentView(R.layout.activity_article_add);
 
         etArticleName = findViewById(R.id.et_article_details_name);
-        etArticleMeasurement = findViewById(R.id.et_article_details_measurement);
+        spArticleMeasurement = findViewById(R.id.sp_article_details_measurement);
         etArticlePrice = findViewById(R.id.et_article_details_price);
-        etArticleBrand = findViewById(R.id.et_article_details_brand);
+        spArticleBrand = findViewById(R.id.sp_article_details_brand);
         spArticleStatus = findViewById(R.id.sp_article_details_status);
 
         btnArticleSave = findViewById(R.id.btn_article_details_save);
@@ -37,7 +39,7 @@ public class ArticleAddActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 DbArticle dbArticle = new DbArticle(ArticleAddActivity.this);
-                long id = dbArticle.insertArticle(etArticleName.getText().toString(), Integer.parseInt(etArticleMeasurement.getText().toString()), Double.parseDouble(etArticlePrice.getText().toString()), Integer.parseInt(etArticleBrand.getText().toString()), ((Status) spArticleStatus.getSelectedItem()).getId());
+                long id = dbArticle.insertArticle(etArticleName.getText().toString(), ((Measurement) spArticleMeasurement.getSelectedItem()).getId(), Double.parseDouble(etArticlePrice.getText().toString()), ((Brand) spArticleBrand.getSelectedItem()).getId(), ((Status) spArticleStatus.getSelectedItem()).getId());
 
                 if (id > 0) {
                     Toast.makeText(ArticleAddActivity.this, "Saved article", Toast.LENGTH_LONG).show();
@@ -50,16 +52,19 @@ public class ArticleAddActivity extends AppCompatActivity {
         });
 
         // SPINNER
-        ArrayAdapter<Status> arrayAdapter = new ArrayAdapter<>(getApplicationContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, MainActivity.statusList);
-        spArticleStatus.setAdapter(arrayAdapter);
+        ArrayAdapter<Status> arrayStatusAdapter = new ArrayAdapter<>(getApplicationContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, MainActivity.statusList);
+        spArticleStatus.setAdapter(arrayStatusAdapter);
 
+        ArrayAdapter<Brand> arrayBrandAdapter = new ArrayAdapter<>(getApplicationContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, MainActivity.brandList);
+        spArticleBrand.setAdapter(arrayBrandAdapter);
+
+        ArrayAdapter<Measurement> arrayMeasurementAdapter = new ArrayAdapter<>(getApplicationContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, MainActivity.measurementList);
+        spArticleMeasurement.setAdapter(arrayMeasurementAdapter);
     }
 
     private void cleanFields() {
         etArticleName.setText("");
-        etArticleMeasurement.setText("");
         etArticlePrice.setText("");
-        etArticleBrand.setText("");
     }
 
     private void goToArticleActivity() {
