@@ -145,7 +145,8 @@ public class ArticleDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!etArticleDetailsStatus.getText().toString().equals("D")) {
-                    ok = dbArticle.updateArticle(Integer.parseInt(etArticleDetailsId.getText().toString()), etArticleDetailsName.getText().toString(), Integer.parseInt(etArticleDetailsMeasurement.getText().toString()), Double.parseDouble(etArticleDetailsPrice.getText().toString()), Integer.parseInt(etArticleDetailsBrand.getText().toString()), "D");
+//                    ok = dbArticle.updateArticle(Integer.parseInt(etArticleDetailsId.getText().toString()), etArticleDetailsName.getText().toString(), Integer.parseInt(etArticleDetailsMeasurement.getText().toString()), Double.parseDouble(etArticleDetailsPrice.getText().toString()), Integer.parseInt(etArticleDetailsBrand.getText().toString()), "D");
+                    ok = dbArticle.updateArticle(Integer.parseInt(etArticleDetailsId.getText().toString()), etArticleDetailsName.getText().toString(), article.getMeasurement_unit(), Double.parseDouble(etArticleDetailsPrice.getText().toString()), article.getBrand(), "D");
 
                     if (ok) {
                         Toast.makeText(ArticleDetailsActivity.this, "Inactivated", Toast.LENGTH_SHORT).show();
@@ -163,7 +164,7 @@ public class ArticleDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!etArticleDetailsStatus.getText().toString().equals("A")) {
-                    ok = dbArticle.updateArticle(Integer.parseInt(etArticleDetailsId.getText().toString()), etArticleDetailsName.getText().toString(), Integer.parseInt(etArticleDetailsMeasurement.getText().toString()), Double.parseDouble(etArticleDetailsPrice.getText().toString()), Integer.parseInt(etArticleDetailsBrand.getText().toString()), "A");
+                    ok = dbArticle.updateArticle(Integer.parseInt(etArticleDetailsId.getText().toString()), etArticleDetailsName.getText().toString(), article.getMeasurement_unit(), Double.parseDouble(etArticleDetailsPrice.getText().toString()), article.getBrand(), "A");
 
                     if (ok) {
                         Toast.makeText(ArticleDetailsActivity.this, "Reactivated", Toast.LENGTH_SHORT).show();
@@ -187,7 +188,7 @@ public class ArticleDetailsActivity extends AppCompatActivity {
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    if (dbArticle.updateArticle(Integer.parseInt(etArticleDetailsId.getText().toString()), etArticleDetailsName.getText().toString(), Integer.parseInt(etArticleDetailsMeasurement.getText().toString()), Double.parseDouble(etArticleDetailsPrice.getText().toString()), Integer.parseInt(etArticleDetailsBrand.getText().toString()), "*")) {
+                                    if (dbArticle.updateArticle(Integer.parseInt(etArticleDetailsId.getText().toString()), etArticleDetailsName.getText().toString(), article.getMeasurement_unit(), Double.parseDouble(etArticleDetailsPrice.getText().toString()), article.getBrand(), "*")) {
                                         goToArticleDetailsActivity();
                                     }
                                 }
