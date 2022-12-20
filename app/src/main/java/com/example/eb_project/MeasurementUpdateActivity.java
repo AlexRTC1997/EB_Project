@@ -64,11 +64,14 @@ public class MeasurementUpdateActivity extends AppCompatActivity {
         ArrayAdapter<Status> arrayAdapter = new ArrayAdapter<>(getApplicationContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, MainActivity.statusList);
         spMeasurementDetailsStatus.setAdapter(arrayAdapter);
 
-        switch (measurement.getStatus()) {
-            case "D": spMeasurementDetailsStatus.setSelection(1); break;
-            case "*": spMeasurementDetailsStatus.setSelection(2); break;
-            case "A":
-            default: spMeasurementDetailsStatus.setSelection(0); break;
+        String sId = measurement.getStatus();
+        for(int i=0; i < MainActivity.statusList.size(); ++i) {
+            String item = MainActivity.statusList.get(i).getId();
+
+            if(sId.equals(item)) {
+                spMeasurementDetailsStatus.setSelection(i);
+                break;
+            }
         }
 
         if(measurement != null) {

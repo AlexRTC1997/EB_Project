@@ -62,19 +62,16 @@ public class StatusUpdateActivity extends AppCompatActivity {
         ArrayAdapter<Status> arrayAdapter = new ArrayAdapter<>(getApplicationContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, MainActivity.statusList);
         spStatusDetailsStatus.setAdapter(arrayAdapter);
 
-        switch (status.getStatus()) {
-            case "D": spStatusDetailsStatus.setSelection(1); break;
-            case "*": spStatusDetailsStatus.setSelection(2); break;
-            case "A":
-            default: spStatusDetailsStatus.setSelection(0); break;
+        String sId = status.getStatus();
+        for(int i=0; i < MainActivity.statusList.size(); ++i) {
+            String item = MainActivity.statusList.get(i).getId();
+
+            if(sId.equals(item)) {
+                spStatusDetailsStatus.setSelection(i);
+                break;
+            }
         }
 
-        //        for(int i = 0; i < MainActivity.statusList.size(); i++) {
-//            if(MainActivity.statusList.get(i).equals(status.getStatus())) {
-//                spStatusDetailsStatus.setSelection(i);
-//                break;
-//            }
-//        }
 
         if(status != null) {
             etStatusDetailsId.setText(status.getId());

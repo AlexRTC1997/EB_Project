@@ -63,11 +63,21 @@ public class BrandUpdateActivity extends AppCompatActivity {
         ArrayAdapter<Status> arrayAdapter = new ArrayAdapter<>(getApplicationContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, MainActivity.statusList);
         spBrandDetailsStatus.setAdapter(arrayAdapter);
 
-        switch (brand.getStatus()) {
-            case "D": spBrandDetailsStatus.setSelection(1); break;
-            case "*": spBrandDetailsStatus.setSelection(2); break;
-            case "A":
-            default: spBrandDetailsStatus.setSelection(0); break;
+//        switch (brand.getStatus()) {
+//            case "D": spBrandDetailsStatus.setSelection(1); break;
+//            case "*": spBrandDetailsStatus.setSelection(2); break;
+//            case "A":
+//            default: spBrandDetailsStatus.setSelection(0); break;
+//        }
+
+        String sId = brand.getStatus();
+        for(int i=0; i < MainActivity.statusList.size(); ++i) {
+            String item = MainActivity.statusList.get(i).getId();
+
+            if(sId.equals(item)) {
+                spBrandDetailsStatus.setSelection(i);
+                break;
+            }
         }
 
         if(brand != null) {

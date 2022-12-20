@@ -3,6 +3,7 @@ package com.example.eb_project;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -14,13 +15,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eb_project.db.DbArticle;
 import com.example.eb_project.entities.Article;
+import com.example.eb_project.entities.Brand;
+import com.example.eb_project.entities.Measurement;
 import com.example.eb_project.entities.Status;
 
 public class ArticleUpdateActivity extends AppCompatActivity {
 
     EditText etArticleDetailsId, etArticleDetailsName, etArticleDetailsMeasurement, etArticleDetailsPrice, etArticleDetailsBrand, etArticleDetailsStatus;
     Button btnArticleDetailsSave, btnArticleDetailsUpdate, btnArticleDetailsDelete, btnArticleDetailsInactivate, btnArticleDetailsReactivate, btnArticleDetailsLDelete;
-    Spinner spArticleDetailsStatus;
+    Spinner spArticleDetailsStatus, spArticleDetailsBrand, spArticleDetailsMeasurement;
 
 
     Article article;
@@ -37,8 +40,10 @@ public class ArticleUpdateActivity extends AppCompatActivity {
         etArticleDetailsId = findViewById(R.id.ed_article_details_id);
         etArticleDetailsName = findViewById(R.id.ed_article_details_name);
         etArticleDetailsMeasurement = findViewById(R.id.ed_article_details_measurement);
+        spArticleDetailsMeasurement = findViewById(R.id.sp_article_details_measurement);
         etArticleDetailsPrice = findViewById(R.id.ed_article_details_price);
         etArticleDetailsBrand = findViewById(R.id.ed_article_details_brand);
+        spArticleDetailsBrand = findViewById(R.id.sp_article_details_brand);
         etArticleDetailsStatus = findViewById(R.id.et_article_details_status);
         spArticleDetailsStatus = findViewById(R.id.sp_article_details_status);
 
@@ -66,15 +71,45 @@ public class ArticleUpdateActivity extends AppCompatActivity {
         article = dbArticle.displayOneArticle(articleId);
 
         // SPINNER
-        ArrayAdapter<Status> arrayAdapter = new ArrayAdapter<>(getApplicationContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, MainActivity.statusList);
-        spArticleDetailsStatus.setAdapter(arrayAdapter);
+        ArrayAdapter<Status> arrayStatusAdapter = new ArrayAdapter<>(getApplicationContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, MainActivity.statusList);
+        spArticleDetailsStatus.setAdapter(arrayStatusAdapter);
 
-        switch (article.getStatus()) {
-            case "D": spArticleDetailsStatus.setSelection(1); break;
-            case "*": spArticleDetailsStatus.setSelection(2); break;
-            case "A":
-            default: spArticleDetailsStatus.setSelection(0); break;
+        ArrayAdapter<Brand> arrayBrandAdapter = new ArrayAdapter<>(getApplicationContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, MainActivity.brandList);
+        spArticleDetailsBrand.setAdapter(arrayBrandAdapter);
+
+        ArrayAdapter<Measurement> arrayMeasurementAdapter = new ArrayAdapter<>(getApplicationContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, MainActivity.measurementList);
+        spArticleDetailsMeasurement.setAdapter(arrayMeasurementAdapter);
+
+        String sId = article.getStatus();
+        for(int i=0; i < MainActivity.statusList.size(); ++i) {
+            String item = MainActivity.statusList.get(i).getId();
+
+            if(sId.equals(item)) {
+                spArticleDetailsStatus.setSelection(i);
+                break;
+            }
         }
+
+        int bId = article.getBrand();
+        for(int i=0; i < MainActivity.brandList.size(); ++i) {
+            int item = MainActivity.brandList.get(i).getId();
+
+            if(bId == item) {
+                spArticleDetailsBrand.setSelection(i);
+                break;
+            }
+        }
+
+        int mId = article.getMeasurement_unit();
+        for(int i=0; i < MainActivity.measurementList.size(); ++i) {
+            int item = MainActivity.measurementList.get(i).getId();
+
+            if(mId == item) {
+                spArticleDetailsMeasurement.setSelection(i);
+                break;
+            }
+        }
+
 
         if(article != null) {
             etArticleDetailsId.setText(String.valueOf(article.getId()));
@@ -85,6 +120,8 @@ public class ArticleUpdateActivity extends AppCompatActivity {
             etArticleDetailsStatus.setText(article.getStatus());
 
             etArticleDetailsStatus.setVisibility(View.INVISIBLE);
+            etArticleDetailsBrand.setVisibility(View.INVISIBLE);
+            etArticleDetailsMeasurement.setVisibility(View.INVISIBLE);
             etArticleDetailsId.setInputType(InputType.TYPE_NULL);
             btnArticleDetailsUpdate.setVisibility(View.INVISIBLE);
             btnArticleDetailsDelete.setVisibility(View.INVISIBLE);
@@ -98,7 +135,8 @@ public class ArticleUpdateActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(!etArticleDetailsId.getText().toString().equals("")) {
-                    ok = dbArticle.updateArticle(Integer.parseInt(etArticleDetailsId.getText().toString()), etArticleDetailsName.getText().toString(), Integer.parseInt(etArticleDetailsMeasurement.getText().toString()), Double.parseDouble(etArticleDetailsPrice.getText().toString()), Integer.parseInt(etArticleDetailsBrand.getText().toString()), ((Status) spArticleDetailsStatus.getSelectedItem()).getId());
+                    ok = dbArticle.updateArticle(Integer.parseInt(etArticleDetailsId.getText().toString()), etArticleDetailsName.getText().toString(), ((Measurement) spArticleDetailsMeasurement.getSelectedItem()).getId(), Double.parseDouble(etArticleDetailsPrice.getText().toString()), ((Brand) spArticleDetailsBrand.getSelectedItem()).getId(), ((Status) spArticleDetailsStatus.getSelectedItem()).getId());
+//                    ok = dbArticle.updateArticle(Integer.parseInt(etArticleDetailsId.getText().toString()), etArticleDetailsName.getText().toString(), Integer.parseInt(etArticleDetailsMeasurement.getText().toString()), Double.parseDouble(etArticleDetailsPrice.getText().toString()), Integer.parseInt(etArticleDetailsBrand.getText().toString()), ((Status) spArticleDetailsStatus.getSelectedItem()).getId());
 
                     if(ok) {
                         Toast.makeText(ArticleUpdateActivity.this, "Updated", Toast.LENGTH_SHORT).show();

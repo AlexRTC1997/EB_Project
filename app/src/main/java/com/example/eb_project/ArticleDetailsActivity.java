@@ -14,13 +14,16 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.eb_project.db.DbArticle;
+import com.example.eb_project.db.DbBrand;
+import com.example.eb_project.db.DbMeasurement;
 import com.example.eb_project.entities.Article;
+import com.example.eb_project.entities.Brand;
 
 public class ArticleDetailsActivity extends AppCompatActivity {
 
     EditText etArticleDetailsId, etArticleDetailsName, etArticleDetailsMeasurement, etArticleDetailsPrice, etArticleDetailsBrand, etArticleDetailsStatus;
     Button btnArticleDetailsSave, btnArticleDetailsUpdate, btnArticleDetailsDelete, btnArticleDetailsInactivate, btnArticleDetailsReactivate, btnArticleDetailsLDelete;
-    Spinner spArticleDetailsStatus;
+    Spinner spArticleDetailsStatus, spArticleDetailsBrand, spArticleDetailsMeasurement;
 
     Article article;
     int articleId;
@@ -36,8 +39,10 @@ public class ArticleDetailsActivity extends AppCompatActivity {
         etArticleDetailsId = findViewById(R.id.ed_article_details_id);
         etArticleDetailsName = findViewById(R.id.ed_article_details_name);
         etArticleDetailsMeasurement = findViewById(R.id.ed_article_details_measurement);
+        spArticleDetailsMeasurement = findViewById(R.id.sp_article_details_measurement);
         etArticleDetailsPrice = findViewById(R.id.ed_article_details_price);
         etArticleDetailsBrand = findViewById(R.id.ed_article_details_brand);
+        spArticleDetailsBrand = findViewById(R.id.sp_article_details_brand);
         etArticleDetailsStatus = findViewById(R.id.et_article_details_status);
         spArticleDetailsStatus = findViewById(R.id.sp_article_details_status);
 
@@ -63,15 +68,22 @@ public class ArticleDetailsActivity extends AppCompatActivity {
         DbArticle dbArticle = new DbArticle(ArticleDetailsActivity.this);
         article = dbArticle.displayOneArticle(articleId);
 
+        DbBrand dbBrand = new DbBrand(ArticleDetailsActivity.this);
+        DbMeasurement dbMeasurement = new DbMeasurement(ArticleDetailsActivity.this);
+
         if(article != null) {
             etArticleDetailsId.setText(String.valueOf(article.getId()));
             etArticleDetailsName.setText(article.getName());
-            etArticleDetailsMeasurement.setText(String.valueOf(article.getMeasurement_unit()));
+//            etArticleDetailsMeasurement.setText(String.valueOf(article.getMeasurement_unit()));
+            etArticleDetailsMeasurement.setText(String.valueOf(dbMeasurement.displayOneMeasurement(article.getMeasurement_unit()).getName()));
             etArticleDetailsPrice.setText(String.valueOf(article.getPrice()));
-            etArticleDetailsBrand.setText(String.valueOf(article.getBrand()));
+//            etArticleDetailsBrand.setText(String.valueOf(article.getBrand()));
+            etArticleDetailsBrand.setText(String.valueOf(dbBrand.displayOneBrand(article.getBrand()).getName()));
             etArticleDetailsStatus.setText(article.getStatus());
 
             spArticleDetailsStatus.setVisibility(View.INVISIBLE);
+            spArticleDetailsBrand.setVisibility(View.INVISIBLE);
+            spArticleDetailsMeasurement.setVisibility(View.INVISIBLE);
             btnArticleDetailsSave.setVisibility(View.INVISIBLE);
             etArticleDetailsId.setInputType(InputType.TYPE_NULL);
             etArticleDetailsName.setInputType(InputType.TYPE_NULL);
