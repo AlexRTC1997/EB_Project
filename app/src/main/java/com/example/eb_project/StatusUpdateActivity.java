@@ -3,9 +3,12 @@ package com.example.eb_project;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +19,7 @@ import com.example.eb_project.entities.Status;
 public class StatusUpdateActivity extends AppCompatActivity {
     EditText etStatusDetailsId, etStatusDetailsDescription, etStatusDetailsStatus;
     Button btnStatusDetailsSave, btnStatusDetailsUpdate, btnStatusDetailsDelete, btnStatusDetailsInactivate, btnStatusDetailsReactivate, btnStatusDetailsLDelete;
+    Spinner spStatusDetailsStatus;
 
     Status status;
     String statusId;
@@ -30,6 +34,7 @@ public class StatusUpdateActivity extends AppCompatActivity {
         etStatusDetailsId = findViewById(R.id.ed_status_details_id);
         etStatusDetailsDescription = findViewById(R.id.et_status_details_description);
         etStatusDetailsStatus = findViewById(R.id.et_status_details_status);
+        spStatusDetailsStatus = findViewById(R.id.sp_status_details_status);
 
         btnStatusDetailsSave = findViewById(R.id.btn_status_details_save);
         btnStatusDetailsUpdate = findViewById(R.id.btn_status_details_update);
@@ -53,12 +58,31 @@ public class StatusUpdateActivity extends AppCompatActivity {
         DbStatus dbStatus = new DbStatus(StatusUpdateActivity.this);
         status = dbStatus.displayOneStatus(statusId);
 
+        // SPINNER
+        ArrayAdapter<Status> arrayAdapter = new ArrayAdapter<>(getApplicationContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, MainActivity.statusList);
+        spStatusDetailsStatus.setAdapter(arrayAdapter);
+
+        switch (status.getStatus()) {
+            case "D": spStatusDetailsStatus.setSelection(1); break;
+            case "*": spStatusDetailsStatus.setSelection(2); break;
+            case "A":
+            default: spStatusDetailsStatus.setSelection(0); break;
+        }
+
+        //        for(int i = 0; i < MainActivity.statusList.size(); i++) {
+//            if(MainActivity.statusList.get(i).equals(status.getStatus())) {
+//                spStatusDetailsStatus.setSelection(i);
+//                break;
+//            }
+//        }
+
         if(status != null) {
             etStatusDetailsId.setText(status.getId());
             etStatusDetailsDescription.setText(status.getDescription());
             etStatusDetailsStatus.setText(status.getStatus());
 
             etStatusDetailsId.setInputType(InputType.TYPE_NULL);
+            etStatusDetailsStatus.setVisibility(View.INVISIBLE);
             btnStatusDetailsUpdate.setVisibility(View.INVISIBLE);
             btnStatusDetailsDelete.setVisibility(View.INVISIBLE);
             btnStatusDetailsInactivate.setVisibility(View.INVISIBLE);
@@ -71,7 +95,7 @@ public class StatusUpdateActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(!etStatusDetailsId.getText().toString().equals("")) {
-                    ok = dbStatus.updateStatus(etStatusDetailsId.getText().toString(), etStatusDetailsDescription.getText().toString(), etStatusDetailsStatus.getText().toString());
+                    ok = dbStatus.updateStatus(etStatusDetailsId.getText().toString(), etStatusDetailsDescription.getText().toString(), ((Status) spStatusDetailsStatus.getSelectedItem()).getId());
                     
                     if(ok) {
                         Toast.makeText(StatusUpdateActivity.this, "Updated", Toast.LENGTH_SHORT).show();

@@ -4,19 +4,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eb_project.db.DbArticle;
 import com.example.eb_project.entities.Article;
+import com.example.eb_project.entities.Status;
 
 public class ArticleUpdateActivity extends AppCompatActivity {
 
     EditText etArticleDetailsId, etArticleDetailsName, etArticleDetailsMeasurement, etArticleDetailsPrice, etArticleDetailsBrand, etArticleDetailsStatus;
     Button btnArticleDetailsSave, btnArticleDetailsUpdate, btnArticleDetailsDelete, btnArticleDetailsInactivate, btnArticleDetailsReactivate, btnArticleDetailsLDelete;
+    Spinner spArticleDetailsStatus;
+
 
     Article article;
     int articleId;
@@ -35,6 +40,7 @@ public class ArticleUpdateActivity extends AppCompatActivity {
         etArticleDetailsPrice = findViewById(R.id.ed_article_details_price);
         etArticleDetailsBrand = findViewById(R.id.ed_article_details_brand);
         etArticleDetailsStatus = findViewById(R.id.et_article_details_status);
+        spArticleDetailsStatus = findViewById(R.id.sp_article_details_status);
 
         btnArticleDetailsSave = findViewById(R.id.btn_article_details_save);
         btnArticleDetailsUpdate = findViewById(R.id.btn_article_details_update);
@@ -59,6 +65,17 @@ public class ArticleUpdateActivity extends AppCompatActivity {
         DbArticle dbArticle = new DbArticle(ArticleUpdateActivity.this);
         article = dbArticle.displayOneArticle(articleId);
 
+        // SPINNER
+        ArrayAdapter<Status> arrayAdapter = new ArrayAdapter<>(getApplicationContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, MainActivity.statusList);
+        spArticleDetailsStatus.setAdapter(arrayAdapter);
+
+        switch (article.getStatus()) {
+            case "D": spArticleDetailsStatus.setSelection(1); break;
+            case "*": spArticleDetailsStatus.setSelection(2); break;
+            case "A":
+            default: spArticleDetailsStatus.setSelection(0); break;
+        }
+
         if(article != null) {
             etArticleDetailsId.setText(String.valueOf(article.getId()));
             etArticleDetailsName.setText(article.getName());
@@ -67,6 +84,7 @@ public class ArticleUpdateActivity extends AppCompatActivity {
             etArticleDetailsBrand.setText(String.valueOf(article.getBrand()));
             etArticleDetailsStatus.setText(article.getStatus());
 
+            etArticleDetailsStatus.setVisibility(View.INVISIBLE);
             etArticleDetailsId.setInputType(InputType.TYPE_NULL);
             btnArticleDetailsUpdate.setVisibility(View.INVISIBLE);
             btnArticleDetailsDelete.setVisibility(View.INVISIBLE);
@@ -80,7 +98,7 @@ public class ArticleUpdateActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(!etArticleDetailsId.getText().toString().equals("")) {
-                    ok = dbArticle.updateArticle(Integer.parseInt(etArticleDetailsId.getText().toString()), etArticleDetailsName.getText().toString(), Integer.parseInt(etArticleDetailsMeasurement.getText().toString()), Double.parseDouble(etArticleDetailsPrice.getText().toString()), Integer.parseInt(etArticleDetailsBrand.getText().toString()), etArticleDetailsStatus.getText().toString());
+                    ok = dbArticle.updateArticle(Integer.parseInt(etArticleDetailsId.getText().toString()), etArticleDetailsName.getText().toString(), Integer.parseInt(etArticleDetailsMeasurement.getText().toString()), Double.parseDouble(etArticleDetailsPrice.getText().toString()), Integer.parseInt(etArticleDetailsBrand.getText().toString()), ((Status) spArticleDetailsStatus.getSelectedItem()).getId());
 
                     if(ok) {
                         Toast.makeText(ArticleUpdateActivity.this, "Updated", Toast.LENGTH_SHORT).show();

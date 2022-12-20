@@ -10,6 +10,7 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.eb_project.db.DbMeasurement;
@@ -19,6 +20,7 @@ public class MeasurementDetailsActivity extends AppCompatActivity {
 
     EditText etMeasurementDetailsId, etMeasurementDetailsName, etMeasurementDetailsStatus;
     Button btnMeasurementDetailsSave, btnMeasurementDetailsUpdate, btnMeasurementDetailsDelete, btnMeasurementDetailsInactivate, btnMeasurementDetailsReactivate, btnMeasurementDetailsLDelete;
+    Spinner spMeasurementDetailsStatus;
 
     Measurement measurement;
     int measurementId;
@@ -34,6 +36,7 @@ public class MeasurementDetailsActivity extends AppCompatActivity {
         etMeasurementDetailsId = findViewById(R.id.ed_measurement_details_id);
         etMeasurementDetailsName = findViewById(R.id.et_measurement_details_name);
         etMeasurementDetailsStatus = findViewById(R.id.et_measurement_details_status);
+        spMeasurementDetailsStatus = findViewById(R.id.sp_measurement_details_status);
         btnMeasurementDetailsSave = findViewById(R.id.btn_measurement_details_save);
 
         btnMeasurementDetailsUpdate = findViewById(R.id.btn_measurement_details_update);
@@ -62,6 +65,7 @@ public class MeasurementDetailsActivity extends AppCompatActivity {
             etMeasurementDetailsName.setText(measurement.getName());
             etMeasurementDetailsStatus.setText(measurement.getStatus());
 
+            spMeasurementDetailsStatus.setVisibility(View.INVISIBLE);
             btnMeasurementDetailsSave.setVisibility(View.INVISIBLE);
             etMeasurementDetailsId.setInputType(InputType.TYPE_NULL);
             etMeasurementDetailsName.setInputType(InputType.TYPE_NULL);

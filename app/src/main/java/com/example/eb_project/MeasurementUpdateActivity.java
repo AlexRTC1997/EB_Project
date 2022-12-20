@@ -4,19 +4,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eb_project.db.DbMeasurement;
 import com.example.eb_project.entities.Measurement;
+import com.example.eb_project.entities.Status;
 
 public class MeasurementUpdateActivity extends AppCompatActivity {
 
     EditText etMeasurementDetailsId, etMeasurementDetailsName, etMeasurementDetailsStatus;
     Button btnMeasurementDetailsSave, btnMeasurementDetailsUpdate, btnMeasurementDetailsDelete, btnMeasurementDetailsInactivate, btnMeasurementDetailsReactivate, btnMeasurementDetailsLDelete;
+    Spinner spMeasurementDetailsStatus;
 
     Measurement measurement;
     int measurementId;
@@ -32,6 +36,7 @@ public class MeasurementUpdateActivity extends AppCompatActivity {
         etMeasurementDetailsId = findViewById(R.id.ed_measurement_details_id);
         etMeasurementDetailsName = findViewById(R.id.et_measurement_details_name);
         etMeasurementDetailsStatus = findViewById(R.id.et_measurement_details_status);
+        spMeasurementDetailsStatus = findViewById(R.id.sp_measurement_details_status);
 
         btnMeasurementDetailsSave = findViewById(R.id.btn_measurement_details_save);
         btnMeasurementDetailsUpdate = findViewById(R.id.btn_measurement_details_update);
@@ -55,11 +60,23 @@ public class MeasurementUpdateActivity extends AppCompatActivity {
         DbMeasurement dbMeasurement = new DbMeasurement(MeasurementUpdateActivity.this);
         measurement = dbMeasurement.displayOneMeasurement(measurementId);
 
+        // SPINNER
+        ArrayAdapter<Status> arrayAdapter = new ArrayAdapter<>(getApplicationContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, MainActivity.statusList);
+        spMeasurementDetailsStatus.setAdapter(arrayAdapter);
+
+        switch (measurement.getStatus()) {
+            case "D": spMeasurementDetailsStatus.setSelection(1); break;
+            case "*": spMeasurementDetailsStatus.setSelection(2); break;
+            case "A":
+            default: spMeasurementDetailsStatus.setSelection(0); break;
+        }
+
         if(measurement != null) {
             etMeasurementDetailsId.setText(String.valueOf(measurement.getId()));
             etMeasurementDetailsName.setText(measurement.getName());
             etMeasurementDetailsStatus.setText(measurement.getStatus());
 
+            etMeasurementDetailsStatus.setVisibility(View.INVISIBLE);
             etMeasurementDetailsId.setInputType(InputType.TYPE_NULL);
             btnMeasurementDetailsUpdate.setVisibility(View.INVISIBLE);
             btnMeasurementDetailsDelete.setVisibility(View.INVISIBLE);
@@ -73,7 +90,7 @@ public class MeasurementUpdateActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(!etMeasurementDetailsId.getText().toString().equals("")) {
-                    ok = dbMeasurement.updateMeasurement(Integer.parseInt(etMeasurementDetailsId.getText().toString()), etMeasurementDetailsName.getText().toString(), etMeasurementDetailsStatus.getText().toString());
+                    ok = dbMeasurement.updateMeasurement(Integer.parseInt(etMeasurementDetailsId.getText().toString()), etMeasurementDetailsName.getText().toString(), ((Status) spMeasurementDetailsStatus.getSelectedItem()).getId());
 
                     if(ok) {
                         Toast.makeText(MeasurementUpdateActivity.this, "Updated", Toast.LENGTH_SHORT).show();

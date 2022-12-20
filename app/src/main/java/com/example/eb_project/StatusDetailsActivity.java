@@ -10,6 +10,7 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.eb_project.db.DbStatus;
@@ -18,6 +19,7 @@ import com.example.eb_project.entities.Status;
 public class StatusDetailsActivity extends AppCompatActivity {
     EditText etStatusDetailsId, etStatusDetailsDescription, etStatusDetailsStatus;
     Button btnStatusDetailsSave, btnStatusDetailsUpdate, btnStatusDetailsDelete, btnStatusDetailsInactivate, btnStatusDetailsReactivate, btnStatusDetailsLDelete;
+    Spinner spStatusDetailsStatus;
 
     Status status;
     String statusId;
@@ -33,6 +35,7 @@ public class StatusDetailsActivity extends AppCompatActivity {
         etStatusDetailsId = findViewById(R.id.ed_status_details_id);
         etStatusDetailsDescription = findViewById(R.id.et_status_details_description);
         etStatusDetailsStatus = findViewById(R.id.et_status_details_status);
+        spStatusDetailsStatus = findViewById(R.id.sp_status_details_status);
         btnStatusDetailsSave = findViewById(R.id.btn_status_details_save);
 
         btnStatusDetailsUpdate = findViewById(R.id.btn_status_details_update);
@@ -67,6 +70,7 @@ public class StatusDetailsActivity extends AppCompatActivity {
             etStatusDetailsStatus.setInputType(InputType.TYPE_NULL);
 
             btnStatusDetailsDelete.setVisibility(View.INVISIBLE);
+            spStatusDetailsStatus.setVisibility(View.INVISIBLE);
 
             if (etStatusDetailsStatus.getText().toString().equals("D")) {
                 btnStatusDetailsInactivate.setVisibility(View.INVISIBLE);

@@ -10,6 +10,7 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.eb_project.db.DbBrand;
@@ -18,6 +19,7 @@ import com.example.eb_project.entities.Brand;
 public class BrandDetailsActivity extends AppCompatActivity {
     EditText etBrandDetailsId, etBrandDetailsName, etBrandDetailsStatus;
     Button btnBrandDetailsSave, btnBrandDetailsUpdate, btnBrandDetailsDelete, btnBrandDetailsInactivate, btnBrandDetailsReactivate, btnBrandDetailsLDelete;
+    Spinner spBrandDetailsStatus;
 
     Brand brand;
     int brandId;
@@ -33,6 +35,7 @@ public class BrandDetailsActivity extends AppCompatActivity {
         etBrandDetailsId = findViewById(R.id.ed_brand_details_id);
         etBrandDetailsName = findViewById(R.id.et_brand_details_name);
         etBrandDetailsStatus = findViewById(R.id.et_brand_details_status);
+        spBrandDetailsStatus = findViewById(R.id.sp_brand_details_status);
         btnBrandDetailsSave = findViewById(R.id.btn_brand_details_save);
 
         btnBrandDetailsUpdate = findViewById(R.id.btn_brand_details_update);
@@ -67,6 +70,7 @@ public class BrandDetailsActivity extends AppCompatActivity {
             etBrandDetailsStatus.setInputType(InputType.TYPE_NULL);
 
             btnBrandDetailsDelete.setVisibility(View.INVISIBLE);
+            spBrandDetailsStatus.setVisibility(View.INVISIBLE);
 
             if (etBrandDetailsStatus.getText().toString().equals("D")) {
                 btnBrandDetailsInactivate.setVisibility(View.INVISIBLE);

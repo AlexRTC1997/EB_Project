@@ -10,6 +10,7 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.eb_project.db.DbArticle;
@@ -19,6 +20,7 @@ public class ArticleDetailsActivity extends AppCompatActivity {
 
     EditText etArticleDetailsId, etArticleDetailsName, etArticleDetailsMeasurement, etArticleDetailsPrice, etArticleDetailsBrand, etArticleDetailsStatus;
     Button btnArticleDetailsSave, btnArticleDetailsUpdate, btnArticleDetailsDelete, btnArticleDetailsInactivate, btnArticleDetailsReactivate, btnArticleDetailsLDelete;
+    Spinner spArticleDetailsStatus;
 
     Article article;
     int articleId;
@@ -37,6 +39,7 @@ public class ArticleDetailsActivity extends AppCompatActivity {
         etArticleDetailsPrice = findViewById(R.id.ed_article_details_price);
         etArticleDetailsBrand = findViewById(R.id.ed_article_details_brand);
         etArticleDetailsStatus = findViewById(R.id.et_article_details_status);
+        spArticleDetailsStatus = findViewById(R.id.sp_article_details_status);
 
         btnArticleDetailsSave = findViewById(R.id.btn_article_details_save);
         btnArticleDetailsUpdate = findViewById(R.id.btn_article_details_update);
@@ -68,6 +71,7 @@ public class ArticleDetailsActivity extends AppCompatActivity {
             etArticleDetailsBrand.setText(String.valueOf(article.getBrand()));
             etArticleDetailsStatus.setText(article.getStatus());
 
+            spArticleDetailsStatus.setVisibility(View.INVISIBLE);
             btnArticleDetailsSave.setVisibility(View.INVISIBLE);
             etArticleDetailsId.setInputType(InputType.TYPE_NULL);
             etArticleDetailsName.setInputType(InputType.TYPE_NULL);
